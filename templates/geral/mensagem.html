@@ -1,0 +1,20 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+<section>
+    <div class="cards_mensagem">
+        <p>Categoria: {{mensagem.categoria}}</p>
+        <p>Assunto: {{mensagem.titulo}}</p>
+        <p>Autor: {{mensagem.autor}}</p>
+        <p>Mensagem: {{mensagem.mensagem}}</p>
+
+    </div>
+
+</section>
+
+
+</main>
+        
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'shared/base_sem_menu.html' %}
+{% load static %}
+{% block content %}
+
+
+        <section>
+            <div class="father white">
+                <div class="card blue">
+                    <a href="{% url 'login'%}">
+                    <img class="card img" src="{% static '/assets/ícones/ferramentas.png' %}"/>
+                    </a>
+                    <p class="conteudo">Login</p>
+                </div>
+                <div class="card blue">
+                    <a href="{% url 'cadastro'%}">
+                    <img class="card img" src="{% static '/assets/ícones/ferramentas.png' %}"/>
+                    </a>
+                    <p class="conteudo">Cadastro</p>
+                </div>
+                <div class="card blue">
+                    <a href="{% url 'logout'%}">
+                    <img class="card img" src="{% static '/assets/ícones/ferramentas.png' %}"/>
+                    </a>
+                    <p class="conteudo">Logout</p>
+                </div>
+              </div>
+        </section>
+
+    </main>
+        
+
+{% endblock %}
