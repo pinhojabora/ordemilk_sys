@@ -1,35 +1,29 @@
 from django import forms
-class ProdutoForms(forms.Form):
-        nome=forms.CharField(
-        label='Nome do Produto', 
-        required=True, 
-        max_length=100,
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control',
-                'placeholder': 'Ex.: Produto',
-            }
-        )
-    )
-        codigo=forms.CharField(
-        label='Código',
-        required=True,
-        max_length=100,
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control',
-                'placeholder': 'Ex.: 99999',
-            }
-        )
-    )
-        unidade=forms.CharField(
-        label='Unidade', 
-        required=True, 
-        max_length=4,
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control',
-                'placeholder': 'Ex.: UN',
-            }
-        ),
-    )
+
+from apps.produto.models import produto
+
+class ProdutoForms(forms.ModelForm):
+        class Meta:
+                model = produto
+                fields = '__all__'
+                labels = {
+            'nome':'Produto',
+            'codigo':'Código',
+            'unidade':'Unidade',
+            'descricao':'Descrição',
+            'peso':'Peso',
+            'dimensoes': 'Dimensões',
+            'categoria': 'Categoria',
+        }
+
+
+        widgets = {
+         'nome': forms.TextInput(attrs={}),
+         'codigo': forms.TextInput(attrs={'class':'form-control'}),   
+         'unidade': forms.TextInput(attrs={'class':'form-control'}),
+         'descricao': forms.Textarea(attrs={'class':'form-control'}),
+         'peso': forms.TextInput(attrs={'class':'form-control'}),
+         'dimensoes': forms.TextInput(attrs={'class':'form-control'}),
+         'categoria': forms.TextInput(attrs={'class':'form-control'}),
+        }
+

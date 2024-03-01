@@ -1,0 +1,39 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<h1 class="titulo-page">{{ produto.nome }}</h1>
+   <div class="conteudo-page">
+        <h3>Código: {{ produto.codigo }}</h3>
+        <p>{{ produto.descricao }}</p>
+        
+<h2>Especificações Técnicas</h2>
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>Unidade</th>
+                        <th>Peso</th>
+                        <th>Dimensões</th>
+                        <th>Categoria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tabela-item">
+                        <td>{{ produto.unidade }}</td>
+                        <td>{{ produto.peso }}</td>
+                        <td>{{ produto.dimensoes }}</td>
+                        <td>{{ produto.categoria }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+     
+   </div> 
+    
+            
+        </main>
+    </div>
+</body>
+
+{% endblock %}

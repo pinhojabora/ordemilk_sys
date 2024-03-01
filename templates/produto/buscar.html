@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<h1 class="titulo-page">Lista de Produtos</h1>
+<h1 class="titulo-page">Busca de Produtos</h1>
 <div class="table-responsive">
     <table class="tabela">
         <thead>
@@ -15,6 +15,7 @@
             </tr>
         </thead>
         <tbody>
+            {% if produtos %}
             {% for produto in produtos %}
             <tr class="tabela-item">
                 <td>{{ produto.codigo }}</td>
@@ -31,12 +32,16 @@
                 </td>
             </tr>
             {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">Produtos não encontrados</td>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 </div>
 
-<div><button><a href="{% url 'cadastro_produto'%}">Cadastrar</a></button>
-</div>
+
     </main>
         
 

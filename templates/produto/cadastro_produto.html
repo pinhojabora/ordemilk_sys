@@ -1,0 +1,30 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="cadastro-page">
+    <form action="{% url 'cadastro_produto'%}" method="POST" class="formCadastro">
+        {% csrf_token %}
+        <h1>Cadastro</h1>
+        <p>Digite os seus dados de acesso no campo abaixo.</p>
+             {% for field in form.visible_fields %}
+                <label for="{{field.id_for_label}}">{{field.label}}</label>
+                 {{field}}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger-">
+                         {{error}}
+                    </div>
+                {% endfor %}
+        {% endfor %}
+       
+        <input type="submit" value="Cadastrar" class="btn-cadastro" />
+        
+    </form>
+</div>
+            
+        </main>
+    </div>
+</body>
+
+{% endblock %}
