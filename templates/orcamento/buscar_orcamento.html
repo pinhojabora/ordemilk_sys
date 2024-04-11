@@ -1,0 +1,42 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+            <div class="centro">
+                <h1 class="titulo_padrao">Busca de Orçamento</h1>
+        
+                <table class="table">
+                    <thead class="tabela_padrao">
+                        <tr class="table_cabecalho">
+                            <th >Data</th>
+                            <th>Cliente</th>
+                            <th>Valor Total</th>
+                            <th colspan="2"></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if orcamentos %}
+                        {% for orcamento in orcamentos %}
+                        <tr>
+                            <td>{{ orcamento.data_orcamento }}</td>
+                            <td>{{ orcamento.nome_cliente }}</td>
+                            <td>{{ orcamento.valor_total }}</td>
+                            <td><a href="{% url 'detalhes_orcamento' orcamento.id %}"><img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/></a></td>
+                            <td><a href="{% url 'excluir_orcamento' orcamento.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Orçamento não encontrado</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+        
+            </div>
+    </div>  
+</div>
+
+{% endblock %}

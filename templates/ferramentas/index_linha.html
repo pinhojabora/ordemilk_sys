@@ -1,0 +1,34 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Tipo de linha</h1>
+            <div class="submenu_item">
+                <a href="{% url 'cadastro_linha' %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Tipo de Linha"/></a>
+            </div>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr class="table_cabecalho">
+                            <th>Linha</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tipo_linha in tipo_linhas %}
+                        <tr>
+                            <td>{{ tipo_linha.tipo_linha_nome }}</td>
+                            <td><a href="{% url 'editar_linha' tipo_linha.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
+                                <a href="{% url 'excluir_linha' tipo_linha.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

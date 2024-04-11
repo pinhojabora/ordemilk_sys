@@ -1,0 +1,48 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Orçamentos</h1>
+            <div class="submenu">
+                <div class="submenu_item">
+                    <form action="{% url 'buscar_orcamento'%}">
+                        <input type="text" name="buscar_orcamento" placeholder="Digite o cliente ou a data">
+                        <button type="submit" class="btn_padrao2"><img class="table_icone" src="{% static '/assets/ícones/lupa.png' %}" alt="ícone de search"></button>
+                    </form>
+                </div>
+                <div class="submenu_item">
+                    <a href="{% url 'cadastro_orcamento' %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Orçamento"/></a>
+                </div>
+            </div>                    
+            <table class="table">
+                <thead>
+                    <tr class="table_cabecalho">
+                        <th>Data</th>
+                        <th>Cliente</th>
+                        <th>Valor Total</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for orcamento in orcamentos %}
+                    <tr>
+                        <td>{{ orcamento.data_orcamento|date:"d/m/Y" }}</td>
+                        <td>{{ orcamento.nome_cliente }}</td>
+                        <td>{{ orcamento.valor_total }}</td>
+                        <td>
+                            <a href="{% url 'detalhes_orcamento' orcamento.id %}"><img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/></a>
+                            <a href="{% url 'excluir_orcamento' orcamento.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a>
+                            <a href="{% url 'converter_orcamento_para_pedido' orcamento.id %}"><img class="table_icone" src="{% static '/assets/ícones/pedido-processado.png' %}" title="Converter em pedido"/></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+ </div>
+
+{% endblock %}

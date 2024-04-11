@@ -1,0 +1,41 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Configurações</h1>
+            <div class="menu_lateral_item">
+                <a href="{% url 'cadastro_configurador'%}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Configuração"/></a>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr class="table_cabecalho">
+                        <th>Data</th>
+                        <th>Cliente</th>
+                        <th>Ações</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for configurador in configuradores %}
+                    <tr>
+                        <td>{{ configurador.data_configuracao|date:"d/m/Y" }}</td>
+                        <td>{{ configurador.nome_cliente }}</td>
+                        <td class="table_item_quantidade"><a href="{% url 'configurador_contencao' configurador.id %}"><img class="table_icone" src="{% static '/assets/ícones/configurar.png' %}" title="Configurar"/></a>
+                            <a href="{% url 'detalhes_configurador' configurador.id %}"><img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/></a>
+                            <a href="{% url 'editar_configurador' configurador.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
+                            <a href="{% url 'converter_configuracao_para_orcamento' configurador.id %}"><img class="table_icone" src="{% static '/assets/ícones/pedido-processado.png' %}" title="Converter em orcamento"/></a></td>
+                        
+                                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

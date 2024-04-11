@@ -1,0 +1,36 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Subcategoria</h1>
+            <div class="submenu_item">
+                <a href="{% url 'cadastro_subcategoria' %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Subcategoria"/></a>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr class="table_cabecalho">
+                        <th>Descrição</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subcategoria in subcategorias %}
+                    <tr class="tabela-item">
+                        <td>{{ subcategoria.nome }}</td>
+                        <td><a href="{% url 'editar_subcategoria' subcategoria.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
+                            <a href="{% url 'excluir_subcategoria' subcategoria.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div> 
+</div>
+   
+          
+
+{% endblock %}

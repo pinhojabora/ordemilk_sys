@@ -1,0 +1,28 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+        <div class="centro">
+            <form action="{% url 'editar_entrada_orcamento' orcamento_id=orcamento.id %}" method="POST" class="form_padrao">
+                {% csrf_token %}
+                <h1 class="form_padrao_titulo">Editar Orçamento</h1>
+                <p class="form_padrao_subtitulo">Digite abaixo os dados do orçamento.</p>
+
+                <div class="form_padrao_conteudo">
+                    <div class="form_padrao_item">
+                        <label for="entrada">Valor de Entrada:</label>
+                        <input type="text" id="entrada" name="entrada" value="{{ orcamento.entrada }}" required>
+                    </div>
+
+                    <!-- Outros campos do orçamento que você deseja editar -->
+                </div>
+                <div class="submenu_item">
+                    <input type="submit" value="Salvar" class="btn_padrao" />
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

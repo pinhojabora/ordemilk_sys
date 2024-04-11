@@ -1,0 +1,33 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+        <div class="centro">
+            <form action="{% url 'cadastro_linha'%}" method="POST" class="form_padrao">
+                {% csrf_token %}
+                <h1 class="form_padrao_titulo">Tipo de linha</h1>
+                <p class="form_padrao_subtitulo">Digite os dados do tipo nos campos abaixo.</p>
+                <div class="form_padrao_conteudo">
+                    {% for field in form.visible_fields %}
+                    <div class="form_padrao_item">
+                            <label for="{{field.id_for_label}}">{{field.label}}</label>
+                            {{field}}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger-">
+                                    {{error}}
+                                </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="submenu_item">
+                    <input type="submit" value="Cadastrar" class="btn_padrao" />
+                </div>
+                
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

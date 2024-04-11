@@ -2,33 +2,34 @@
 {% load static %}
 {% block content %}
 
-<h1 class="titulo-page">Busca de Produtos</h1>
-<div class="table-responsive">
-    <table class="tabela">
-        <thead>
-            <tr>
-                <th>Código</th>
+
+    <div class="centro">
+        <h1 class="titulo_padrao">Busca de Produtos</h1>
+        <div>
+    <table class="table">
+        <thead class="tabela_padrao">
+            <tr class="table_cabecalho">
+                <th >Código</th>
                 <th>Nome</th>
                 <th>Categoria</th>
-                <th></th>
-                <th></th>
+                <th colspan="3"></th>
+
             </tr>
         </thead>
         <tbody>
             {% if produtos %}
             {% for produto in produtos %}
-            <tr class="tabela-item">
+            <tr>
                 <td>{{ produto.codigo }}</td>
                 <td>{{ produto.nome }}</td>
                 <td>{{ produto.categoria }}</td>
-                <td><a href="{% url 'detalhes_produto' produto.id %}">
-                        <img class="tabela-icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/>
-                    </a>
-                </td>
-                <td>
-                    <a href="{% url 'detalhes_produto' produto.id %}">
-                        <img class="tabela-icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/>
-                    </a>
+                <td><a href="{% url 'detalhes_produto' produto.id %}"><img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/></a></td>
+                <td><a href="{% url 'editar_produto' produto.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a></td>
+                <td><form action="{% url 'adicionar_carrinho' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                        <button class="btn_padrao2" type="submit"><img class="table_icone" src="{% static '/assets/ícones/carrinho.png' %}" alt="Importar Produtos" /></button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}
@@ -39,10 +40,11 @@
             {% endif %}
         </tbody>
     </table>
-</div>
+        </div>
 
+    </div>
+ </div>
 
-    </main>
-        
+       
 
 {% endblock %}

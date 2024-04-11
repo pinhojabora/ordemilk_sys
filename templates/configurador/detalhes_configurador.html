@@ -1,0 +1,69 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Detalhes da Configuração</h1>
+            <h2 class="titulo_padrao">Cliente: {{ configurador.nome_cliente }}</h2>
+        
+            <div class="dados_orcamento"> 
+                <div class="dados_orcamento_grupo">
+                    <p class="dados_orcamento_legenda">Data da configuração:</p><p class="dados_orcamento_input">{{ configurador.data_configuracao }}</p>
+                    <p class="dados_orcamento_legenda">Endereço do cliente:</p><p class="dados_orcamento_input">{{ configurador.endereco_cliente }}</p>
+                    <p class="dados_orcamento_legenda">Cidade:</p><p class="dados_orcamento_input">{{ configurador.cidade }}</p>
+                    <p class="dados_orcamento_legenda">Estado:</p><p class="dados_orcamento_input">{{ configurador.estado }}</p>
+                    <p class="dados_orcamento_legenda">CEP:</p><p class="dados_orcamento_input">{{ configurador.cep }}</p>
+                    <p class="dados_orcamento_legenda">Fone:</p><p class="dados_orcamento_input">{{ configurador.fone }}</p>
+                    <p class="dados_orcamento_legenda">E-mail:</p><p class="dados_orcamento_input">{{ configurador.email }}</p> 
+                </div>
+                                
+                <div class="dados_orcamento_grupo">
+                    <p class="dados_orcamento_legenda">Observações:</p><p class="dados_orcamento_input">{{ configurador.observacao }}</p>
+        
+                </div>
+                <div class="dados_orcamento_grupo">
+                    <p class="dados_orcamento_legenda">Energia:</p><p class="dados_orcamento_input">{{ configurador.tensao_energia }}</p>
+                    <p class="dados_orcamento_legenda">Sala:</p><p class="dados_orcamento_input">{{ configurador.modelo_sala }}</p>
+                    <p class="dados_orcamento_legenda">Modelo:</p><p class="dados_orcamento_input">{{ configurador.modelo_equipamento }}</p>
+                    <p class="dados_orcamento_legenda">Linha:</p><p class="dados_orcamento_input">{{ configurador.tipo_linha }}</p>
+                    <p class="dados_orcamento_legenda">Contenção:</p><p class="dados_orcamento_input">{{ configurador.tipo_contencao }}</p>
+                    <p class="dados_orcamento_legenda">Gerenciamento:</p><p class="dados_orcamento_input">{{ configurador.gerenciamento }}</p>
+                </div>  
+
+                
+            </div>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr class="table_cabecalho">
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Ações</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in itens_configurador %}
+                        <tr>
+                            <td class="table_item">{{ item.produto.nome }}</td>
+                            <td class="table_item_quantidade">{{ item.quantidade }}</td>
+                            <td class="table_item_quantidade"></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+                
+        </div>
+    
+
+    
+    
+    </div>
+</div>
+ 
+
+    
+ {% endblock %}
+

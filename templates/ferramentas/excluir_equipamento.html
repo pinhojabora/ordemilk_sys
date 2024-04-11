@@ -1,0 +1,23 @@
+{% extends 'shared/base.html' %}
+{% block content %}
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Confirmação de Exclusão</h1>
+            <h3 class="subtitulo_padrao">Tem certeza que deseja excluir o modelo de equipamento "{{ modelo_equipamento.modelo_equipamento_nome }}"?</h3>
+            <div class="submenu">
+                <div class="submenu_item">
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="btn_padrao" type="submit" name="confirmacao">Excluir</button>
+                    </form>
+                </div>
+                <div class="submenu_item">
+                    <a href="{% url 'index_sala' %}" class="btn_padrao">Cancelar</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

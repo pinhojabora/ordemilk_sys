@@ -1,0 +1,45 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+            <div class="centro">
+                <h1 class="titulo_padrao">Busca de Pedido</h1>
+                <div>
+                    <table class="table">
+                        <thead class="tabela_padrao">
+                            <tr class="table_cabecalho">
+                                <th >Data</th>
+                                <th>Cliente</th>
+                                <th>Valor Total</th>
+                                <th colspan="2"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if pedidos %}
+                            {% for pedido in pedidos %}
+                            <tr>
+                                <td>{{ pedido.data_pedido }}</td>
+                                <td>{{ pedido.nome_cliente }}</td>
+                                <td>{{ pedido.valor_total }}</td>
+                                <td><a href="{% url 'detalhes_pedido' pedido.id %}"><img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/></a></td>
+                                <td><a href="{% url 'excluir_pedido' pedido.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Pedido não encontrado</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    
+    </div>
+
+</div>
+        
+
+{% endblock %}

@@ -40,10 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'admin_honeypot',
     
     'apps.geral.apps.GeralConfig',
     'apps.usuarios.apps.UsuariosConfig',
     'apps.produto.apps.ProdutoConfig',
+    'apps.galeria.apps.GaleriaConfig',
+    'apps.orcamento.apps.OrcamentoConfig',
+    'apps.pedido.apps.PedidoConfig',
+    'apps.configurador.apps.ConfiguradorConfig',
+    'apps.ferramentas.apps.FerramentasConfig',
+    'apps.carrinho.apps.CarrinhoConfig',
 ]
 
 MIDDLEWARE = [
@@ -112,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'utc'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -129,6 +136,10 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = "/media/"
 
 
 # Default primary key field type

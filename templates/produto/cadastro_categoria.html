@@ -1,0 +1,36 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <div class="centro">
+            <form action="{% url 'cadastro_categoria'%}" method="POST" class="form_padrao">
+                {% csrf_token %}
+                <h1 class="form_padrao_titulo">Cadastro Categoria</h1>
+                <p class="form_padrao_subtitulo">Digite os dados da categoria no campo abaixo.</p>
+                <div class="form_padrao_conteudo">
+                    {% for field in form.visible_fields %}
+                    <div class="form_padrao_item">
+                        <label for="{{field.id_for_label}}">{{field.label}}</label>
+                        {{field}}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger-">
+                                {{error}}
+                            </div>
+                        {% endfor %}
+                    <div class="form_padrao_item">
+                    {% endfor %}
+                </div>
+                <div class="submenu_item">
+                    <input type="submit" value="Cadastrar" class="btn_padrao" />
+                </div>
+                
+                
+            </form>
+        </div>
+            
+        
+    </div>
+</div>
+
+{% endblock %}

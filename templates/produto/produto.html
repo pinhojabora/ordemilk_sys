@@ -2,42 +2,71 @@
 {% load static %}
 {% block content %}
 
-<h1 class="titulo-page">Lista de Produtos</h1>
-<div class="table-responsive">
-    <table class="tabela">
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Nome</th>
-                <th>Categoria</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for produto in produtos %}
-            <tr class="tabela-item">
-                <td>{{ produto.codigo }}</td>
-                <td>{{ produto.nome }}</td>
-                <td>{{ produto.categoria }}</td>
-                <td><a href="{% url 'detalhes_produto' produto.id %}">
-                        <img class="tabela-icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/>
-                    </a>
-                </td>
-                <td>
-                    <a href="{% url 'detalhes_produto' produto.id %}">
-                        <img class="tabela-icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/>
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <div class="centro">
+            <h1 class="titulo_padrao">Produtos</h1>
+            
+            <div class="submenu">
+                <div class="submenu_item">
+                    <form method="GET">
+                         <label for="categoria" class="label-lista"><strong></strong></label>
+                            <select name="categoria" id="categoria" class="label-lista">
+                                <option value="">Todas</option>
+                                {% for categoria in categorias %}
+                                    <option value="{{ categoria.id }}" {% if categoria.id == categoria_selecionada %}selected{% endif %}>{{ categoria.nome }}</option>
+                                {% endfor %}
+                            </select>
+                        <button type="submit" class="btn_padrao2"><img class="table_icone" src="{% static '/assets/ícones/filtro.png' %}" title="Cadastrar"/></button>
+                    </form>
+                </div>
+                <div class="submenu_item">
+                    <a href="{% url 'cadastro_produto' %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Produto"/></a>
+                </div>
+            </div>
+            
+           
+            {% if categoria_selecionada %}
+            <h2 class="titulo_padrao">{{ categoria_selecionada.nome }}</h2>
+             {% endif %}
+            <table class="table">
+                <thead>
+                    <tr class="table_cabecalho">
+                        <th>Código</th>
+                        <th>Produto</th>
+                        <th>Unidade</th>
+                        <th colspan="3"></th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                {% for subcategoria, produtos in produtos_agrupados.items %}
+                    <tr>
+                        <td colspan="6" class="table_subcategoria"><p>{{ subcategoria.nome }}</p></td>
+                    </tr>
+                    {% for produto in produtos %}
+                    <tr class="tabela-item">
+                        <td>{{ produto.codigo }}</td>
+                        <td>{{ produto.nome }}</td>
+                        <td>{{ produto.unidade }}</td>
+                        <td><a href="{% url 'detalhes_produto' produto.id %}">
+                            <img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/>
+                        </a></td>
+                        <td><a href="{% url 'editar_produto' produto.id %}">
+                            <img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/>
+                        </a></td>
+                        <td><form action="{% url 'adicionar_carrinho' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                            <button class="btn_padrao2" type="submit"><img class="table_icone" src="{% static '/assets/ícones/carrinho.png' %}" alt="Importar Produtos" /></button>
+                        </form>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-
-<div><button><a href="{% url 'cadastro_produto'%}">Cadastrar</a></button>
-</div>
-    </main>
-        
+       
 
 {% endblock %}

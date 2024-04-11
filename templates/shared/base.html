@@ -22,6 +22,9 @@
      <main>          
 
          {% include 'partials/_menu.html' %}
+         <div class="pagina_padrao">
+            <div class="corpo_pagina">
+         {% include 'partials/_menu_lateral.html' %}
          {% block content %}{% endblock %}
          {% include 'partials/_footer.html' %}
  </body>

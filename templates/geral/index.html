@@ -2,57 +2,69 @@
 {% load static %}
 {% block content %}
 
-
-        <section>
-            <div class="father white">
-                <div class="card">
-                    <a href="{% url 'produto'%}">
-                    <img class="card img" src="{% static '/assets/ícones/produtos.png' %}"/>
-                    </a>
-                    <p class="conteudo">Produtos</p>
-                </div>
-                <div class="card blue">
-                    <img class="card img" src="{% static '/assets/ícones/lista-de-precos.png' %}"/>
-                    <p class="conteudo">Lista de preços</p>
-                </div>
-                <div class="card blue">
-                    <img class="card img" src="{% static '/assets/ícones/orcamento2.png' %}"/>
-                    <p class="conteudo">Orçamentos</p>
-                </div>
-                <div class="card blue">
-                    <img class="card img" src="{% static '/assets/ícones/pedido.png' %}"/>
-                    <p class="conteudo">Pedidos</p>
-                </div>
-                <div class="card blue">
-                    <img class="card img" src="{% static '/assets/ícones/pos-vendas.png' %}"/>
-                    <p class="conteudo">Pós-vendas</p>
-                </div>
-                <div class="card blue">
-                    <img class="card img" src="{% static '/assets/ícones/configurador.png' %}"/>
-                    <p class="conteudo">Configurador</p>
-                </div>
-                <div class="card blue">
-                    <img class="card img" src="{% static '/assets/ícones/dashboard.png' %}"/>
-                    <p class="conteudo">Dashboard</p>
-                </div>
-                <div class="card blue">
-                    <img class="card img" src="{% static '/assets/ícones/relatorio.png' %}"/>
-                    <p class="conteudo">Relatórios</p>
-                </div>
-                <div class="card blue">
-                    <img class="card img" src="{% static '/assets/ícones/ferramentas.png' %}"/>
-                    <p class="conteudo">Ferramentas</p>
-                </div>
-                <div class="card blue">
-                    <a href="{% url 'index_usuario'%}">
-                    <img class="card img" src="{% static '/assets/ícones/ferramentas.png' %}"/>
-                    </a>
-                    <p class="conteudo">Usuario</p>
-                </div>
-              </div>
-        </section>
-
-    </main>
+        <div class="centro">
+            <section>
+                    <div class="father white">
+                        <div class="card blue">
+                            <a href="{% url 'produto'%}">
+                            <img class="card img" src="{% static '/assets/ícones/produtos.png' %}"/>
+                            </a>
+                            <p class="conteudo">Produtos</p>
+                        </div>
+                        <div class="card blue">
+                            <a href="{% url 'lista_preco'%}">
+                            <img class="card img" src="{% static '/assets/ícones/lista-de-precos.png' %}"/>
+                            </a>
+                            <p class="conteudo">Lista de preços</p>
+                        </div>
+                        <div class="card blue">
+                            <a href="{% url 'index_orcamento'%}">
+                            <img class="card img" src="{% static '/assets/ícones/orcamento2.png' %}"/>
+                            </a>
+                            <p class="conteudo">Orçamentos</p>
+                        </div>
+                        <div class="card blue">
+                            <a href="{% url 'index_pedido'%}">
+                            <img class="card img" src="{% static '/assets/ícones/pedido.png' %}"/>
+                            </a>
+                            <p class="conteudo">Pedidos</p>
+                        </div>
+                        <div class="card blue">
+                            <img class="card img" src="{% static '/assets/ícones/pos-vendas.png' %}"/>
+                            <p class="conteudo">Pós-vendas</p>
+                        </div>
+                        <div class="card blue">
+                            <a href="{% url 'index_configurador'%}">
+                            <img class="card img" src="{% static '/assets/ícones/configurador.png' %}"/>
+                            </a>
+                            <p class="conteudo">Configurador</p>
+                        </div>
+                        <div class="card blue">
+                            <img class="card img" src="{% static '/assets/ícones/dashboard.png' %}"/>
+                            <p class="conteudo">Dashboard</p>
+                        </div>
+                        <div class="card blue">
+                            <img class="card img" src="{% static '/assets/ícones/relatorio.png' %}"/>
+                            <p class="conteudo">Relatórios</p>
+                        </div>
+                        <div class="card blue">
+                            <a href="{% url 'index_ferramentas'%}">
+                            <img class="card img" src="{% static '/assets/ícones/ferramentas.png' %}"/>
+                            </a>
+                            <p class="conteudo">Ferramentas</p>
+                        </div>
+                        <div class="card blue">
+                            <a href="{% url 'lista_carrinho'%}">
+                            <img class="card img" src="{% static '/assets/ícones/carrinho2.png' %}"/>
+                            </a>
+                            <p class="conteudo">Carrinho</p>
+                        </div>
+                        
+                    </div>
+                </section>
+        </div>
+    </div>
+</div>
         
 
 {% endblock %}

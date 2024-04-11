@@ -1,0 +1,19 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <div class="centro_padrao">
+            <h1 class="titulo_padrao">Confirmar Exclusão da Parcela</h1>
+            <h3 class="subtitulo_padrao">Tem certeza de que deseja excluir esta parcela?</h3>
+            <h3 class="subtitulo_padrao">Data: {{ parcela.data_parcela|date:"d/m/Y" }}</h3>
+            <h3 class="subtitulo_padrao">Valor: {{ parcela.valor_parcela }}</h3>
+            <form action="{% url 'excluir_parcela' parcela.id %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="Confirmar Exclusão" class="btn_padrao" />
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

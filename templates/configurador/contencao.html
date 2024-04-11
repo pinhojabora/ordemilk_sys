@@ -1,0 +1,61 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Adicionar Contenção</h1>
+            <h2 class="titulo_padrao">Cliente: {{ configurador.nome_cliente }}</h2>
+            
+            <div class="dados_orcamento"> 
+                                
+                <div class="dados_orcamento_grupo">
+                    <p class="dados_orcamento_legenda">Energia:</p><p class="dados_orcamento_input">{{ configurador.tensao_energia }}</p>
+                    <p class="dados_orcamento_legenda">Sala:</p><p class="dados_orcamento_input">{{ configurador.modelo_sala }}</p>
+                    <p class="dados_orcamento_legenda">Modelo:</p><p class="dados_orcamento_input">{{ configurador.modelo_equipamento }}</p>
+                    <p class="dados_orcamento_legenda">Linha:</p><p class="dados_orcamento_input">{{ configurador.tipo_linha }}</p>
+                    <p class="dados_orcamento_legenda">Contenção:</p><p class="dados_orcamento_input">{{ configurador.tipo_contencao }}</p>
+                </div> 
+                
+                <div class="dados_orcamento_grupo">
+                    <div>
+                    <p class="dados_orcamento_legenda">Selecione a Contenção:</p>
+                <table class="table">
+                    <thead>
+                        <tr class="table_cabecalho">
+                            <th>Produto</th>
+                            <th> </th>
+                        </tr> 
+                    </thead>    
+                    <tbody>
+                            {% for produto in produtos_contencao %}    
+                        <tr>
+                            <td class="table_item">{{ produto.nome }}</td> 
+                            <td class="table_item">
+                                <form action="{% url 'adicionar_contencao' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="configurador_id" value="{{ configurador.id }}">
+                                    <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                                    <button class="btn_padrao2" type="submit"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Adicionar"/></button>
+                                </form>
+                                    {% empty %}
+                                    <li>Nenhum produto relacionado à contenção encontrado.</li>
+                                    {% endfor %}
+                            </td> 
+                        </tr>
+                    </tbody>     
+                    </table> 
+                </div>
+                </div>
+            </div>
+            
+                    
+        </div>
+    
+    </div>
+        
+</div>
+ 
+
+    
+ {% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+        <div class="centro">
+                <h1 class="titulo_padrao">Navegue pela galeria</h1>
+
+                    <div class="btn-local"><a href="{% url 'nova_imagem'%}"><button class="btn_padrao">Inserir Nova imagem</button></a>
+                    </div>
+
+                    <section class="galeria">
+                        <div class="cards_imagem">
+                            <ul class="cards__lista_imagem">
+                                {% if cards %}
+                                {% for fotografia in cards %}
+                                <li class="card_foto">
+                                    <a href="{% url 'imagem' fotografia.id %}">
+                                    {% if fotografia.foto == "" or fotografia.foto == null %}
+                                        <img class="card__imagem2" src="{% static 'assets/imagens/not-found.png'%}" alt="foto">
+                                    {% else %}
+                                        <img class="card__imagem2" src="{{ fotografia.foto.url }}" alt="foto">
+                                    {% endif %}
+                                    </a>
+                                    <div class="card__info_imagem">
+                                        <p class="card__titulo_imagem">{{fotografia.nome}}</p>
+                                        
+                                    </div>
+                                </li>
+                                {% endfor %}
+                                {% else %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </section>
+        </div>  
+    </div>
+</div>
+
+{% endblock %}

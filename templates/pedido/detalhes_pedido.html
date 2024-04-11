@@ -1,0 +1,71 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Detalhes do Pedido</h1>
+            <h2 class="titulo_padrao">Cliente: {{ pedido.nome_cliente }}</h2>
+            
+            <div class="dados_orcamento"> 
+                <div class="dados_orcamento_grupo">
+                    <p class="dados_orcamento_legenda">Data do pedido:</p><p class="dados_orcamento_input">{{ pedido.data_pedido }}</p>
+                    <p class="dados_orcamento_legenda">Endereço do cliente:</p><p class="dados_orcamento_input">{{ pedido.endereco_cliente }}</p>
+                    <p class="dados_orcamento_legenda">Cidade:</p><p class="dados_orcamento_input">{{ pedido.cidade }}</p>
+                    <p class="dados_orcamento_legenda">Estado:</p><p class="dados_orcamento_input">{{ pedido.estado }}</p>
+                    <p class="dados_orcamento_legenda">CEP:</p><p class="dados_orcamento_input">{{ pedido.cep }}</p>
+                    <p class="dados_orcamento_legenda">Fone:</p><p class="dados_orcamento_input">{{ pedido.fone }}</p>
+                    <p class="dados_orcamento_legenda">E-mail:</p><p class="dados_orcamento_input">{{ pedido.email }}</p> 
+                </div>
+                <div class="dados_orcamento_grupo">
+                    <p class="dados_orcamento_legenda">Forma de Pagamento:</p><p class="dados_orcamento_input">{{ pedido.forma_pagamento }}</p>
+                    <p class="dados_orcamento_legenda">Pagamento:</p><p class="dados_orcamento_input">{{ pedido.pagamento }}</p>
+                    <p class="dados_orcamento_legenda">Valor total:</p><p class="dados_orcamento_input_valor">{{ pedido.valor_total }}</p>
+                    <p class="dados_orcamento_legenda">Entrada:</p><p class="dados_orcamento_input_valor">{{ pedido.entrada }}</p>
+                    <p class="dados_orcamento_legenda">Saldo:</p><p class="dados_orcamento_input_valor">{{ pedido.saldo }}</p>
+                    <p class="dados_orcamento_legenda">Parcelas:</p><p class="dados_orcamento_input">{{ pedido.parcelas }}</p>
+                    <br>
+                    
+                </div>
+                    
+                <div class="dados_orcamento_grupo">
+                    <p class="dados_orcamento_legenda">Observações:</p><p class="dados_orcamento_input">{{ pedido.observacao }}</p>
+                </div>
+                    
+            </div>
+            
+            <h2 class="titulo_padrao">Itens do Pedido</h2>
+            <div class="submenu_item">
+                <a href="{% url 'importar_produtos_pedido' pedido_id=pedido.id %}"><button class="btn_padrao">Importar Produtos do Carrinho</button></a>
+            </div>
+            
+            <div>
+            <table class="table">
+                <thead>
+                    <tr class="table_cabecalho">
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Valor Unitário</th>
+                        <th>Total</th>
+                        <th>Ações</th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in itens_pedido %}
+                    <tr>
+                        <td class="table_item">{{ item.produto.nome }}</td>
+                        <td class="table_item_quantidade">{{ item.quantidade }}</td>
+                        <td class="table_item_valor">{{ item.valor_unitario }}</td>
+                        <td class="table_item_valor">{{ item.valor_total }}</td>
+                        <td class="table_item_quantidade"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+     
+ {% endblock %}
+

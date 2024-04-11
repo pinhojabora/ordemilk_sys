@@ -1,0 +1,74 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+        <div class="centro">
+            <section>
+                <div class="father white">
+                    <div class="card blue">
+                        <a href="{% url 'index_usuario'%}">
+                        <img class="card img" src="{% static '/assets/ícones/ferramentas.png' %}"/>
+                        </a>
+                        <p class="conteudo">Usuario</p>
+                    </div>
+                    <div class="card blue">
+                        <a href="{% url 'index_galeria'%}">
+                        <img class="card img" src="{% static '/assets/ícones/ferramentas.png' %}"/>
+                        </a>
+                        <p class="conteudo">Galeria Imagens</p>
+                    </div>
+                    <div class="card blue">
+                        <a href="{% url 'index_tensao'%}">
+                        <img class="card img" src="{% static '/assets/ícones/energia.png' %}"/>
+                        </a>
+                        <p class="conteudo">Tensão energia</p>
+                    </div>
+                    <div class="card blue">
+                        <a href="{% url 'index_sala'%}">
+                        <img class="card img" src="{% static '/assets/ícones/configuracoes.png' %}"/>
+                        </a>
+                        <p class="conteudo">Modelo de sala</p>
+                    </div>
+                    <div class="card blue">
+                        <a href="{% url 'index_equipamento'%}">
+                        <img class="card img" src="{% static '/assets/ícones/configuracoes.png' %}"/>
+                        </a>
+                        <p class="conteudo">Modelo</p>
+                    </div>
+                    <div class="card blue">
+                        <a href="{% url 'index_linha'%}">
+                        <img class="card img" src="{% static '/assets/ícones/configuracoes.png' %}"/>
+                        </a>
+                        <p class="conteudo">Linha</p>
+                    </div>
+                    <div class="card blue">
+                        <a href="{% url 'index_contencao'%}">
+                        <img class="card img" src="{% static '/assets/ícones/configuracoes.png' %}"/>
+                        </a>
+                        <p class="conteudo">Contenção</p>
+                    </div> 
+                    <div class="card blue">
+                        <a href="{% url 'index_gerenciamento'%}">
+                        <img class="card img" src="{% static '/assets/ícones/configuracoes.png' %}"/>
+                        </a>
+                        <p class="conteudo">Gerenciamento</p>
+                    </div> 
+                    <div class="card blue">
+                        <a href="{% url 'categoria'%}">
+                        <img class="card img" src="{% static '/assets/ícones/configuracoes.png' %}"/>
+                        </a>
+                        <p class="conteudo">Categoria</p>
+                    </div>             
+                    <div class="card blue">
+                        <a href="{% url 'subcategoria'%}">
+                        <img class="card img" src="{% static '/assets/ícones/configuracoes.png' %}"/>
+                        </a>
+                        <p class="conteudo">Subcategoria</p>
+                    </div> 
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

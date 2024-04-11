@@ -1,0 +1,38 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="centro">
+        <h1 class="titulo_padrao">Carrinho</h1>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr class="table_cabecalho">
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Valor Unitário</th>
+                        <th>Valor Total</th>
+                        <th>Ações</th> <!-- Adicionando coluna para ações -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for carrinho in carrinhos %}
+                    <tr>
+                        <td>{{ carrinho.produto }}</td>
+                        <td>{{ carrinho.quantidade }}</td>
+                        <td>R$ {{ carrinho.valor_unitario|floatformat:"2" }}</td> <!-- Formatando o valor unitário -->
+                        <td>R$ {{ carrinho.valor_total|floatformat:"2" }}</td> <!-- Formatando o valor total -->
+                        <td>
+                            <a href="{% url 'editar_carrinho' carrinho.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
+                            <a href="{% url 'excluir_item_carrinho' carrinho.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

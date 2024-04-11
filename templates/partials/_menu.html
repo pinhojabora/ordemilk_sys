@@ -4,11 +4,11 @@
 
 
       <div class="topnav">
-        <a href="{% url 'index'%}">Home</a>
-        <a href="{% url 'logout'%}">Logout</a>
+
+       
         <div>
           <form class="split" action="{% url 'buscar'%}">
-            <input class="busca__input" type="text" name="buscar" placeholder="O que você procura?">
+            <input class="busca__input" type="text" name="buscar" placeholder="Digite o nome do produto">
             <button class="btn-busca" type="submit">
               <img class="busca_icone" src="{% static '/assets/ícones/lupa.png' %}" alt="ícone de search">
             </button>

@@ -9,6 +9,10 @@ from django.contrib import auth
 from django.contrib import messages
 
 def index_usuario(request):
+        if not request.user.is_authenticated:
+                messages.error(request, 'Usuário não logado')
+                return redirect('login')
+        
         return render(request, 'usuario/index_usuario.html')
 
 def login(request):
@@ -37,6 +41,10 @@ def login(request):
     return render(request, 'usuario/login.html', {'form': form})
 
 def cadastro(request):
+    if not request.user.is_authenticated:
+                messages.error(request, 'Usuário não logado')
+                return redirect('login')
+    
     form = CadastroForms()
 
     if request.method == 'POST':

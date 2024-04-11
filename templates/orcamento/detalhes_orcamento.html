@@ -1,0 +1,105 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Detalhes do Orçamento</h1>
+            <h2 class="titulo_padrao">Cliente: {{ orcamento.nome_cliente }}</h2>
+            
+            <div class="dados_orcamento"> 
+                <div class="dados_orcamento_grupo">
+                    <p class="dados_orcamento_legenda">Data do orçamento:</p><p class="dados_orcamento_input">{{ orcamento.data_orcamento }}</p>
+                    <p class="dados_orcamento_legenda">Endereço do cliente:</p><p class="dados_orcamento_input">{{ orcamento.endereco_cliente }}</p>
+                    <p class="dados_orcamento_legenda">Cidade:</p><p class="dados_orcamento_input">{{ orcamento.cidade }}</p>
+                    <p class="dados_orcamento_legenda">Estado:</p><p class="dados_orcamento_input">{{ orcamento.estado }}</p>
+                    <p class="dados_orcamento_legenda">CEP:</p><p class="dados_orcamento_input">{{ orcamento.cep }}</p>
+                    <p class="dados_orcamento_legenda">Fone:</p><p class="dados_orcamento_input">{{ orcamento.fone }}</p>
+                    <p class="dados_orcamento_legenda">E-mail:</p><p class="dados_orcamento_input">{{ orcamento.email }}</p> 
+                </div>
+                <div class="dados_orcamento_grupo">
+                    <p class="dados_orcamento_legenda">Forma de Pagamento:</p><p class="dados_orcamento_input">{{ orcamento.forma_pagamento }}</p>
+                    <p class="dados_orcamento_legenda">Pagamento:</p><p class="dados_orcamento_input">{{ orcamento.pagamento }}</p>
+                    <p class="dados_orcamento_legenda">Valor total:</p><p class="dados_orcamento_input_valor">{{ orcamento.valor_total }}</p>
+                    <p class="dados_orcamento_legenda">Entrada:</p><p class="dados_orcamento_input_valor">{{ orcamento.entrada }}</p>
+                    <p class="dados_orcamento_legenda">Saldo:</p><p class="dados_orcamento_input_valor">{{ orcamento.saldo }}</p>
+                    <p class="dados_orcamento_legenda">Parcelas:</p><p class="dados_orcamento_input">{{ orcamento.parcelas }}</p>
+                    <div class="submenu">
+                        <div class="submenu_item">
+                           <a href="{% url 'editar_entrada_orcamento' orcamento_id=orcamento.id %}"><button class="btn_padrao">Lançar Entrada</button></a> 
+                        </div>
+                        <div class="submenu_item">
+                         <a href="{% url 'editar_orcamento' orcamento.id %}"><button class="btn_padrao">Editar orçamento</button></a>   
+                        </div>
+                    </div>                   
+                </div>
+                <div class="dados_orcamento_grupo">
+                    <p class="dados_orcamento_legenda">Observações:</p><p class="dados_orcamento_input">{{ orcamento.observacao }}</p>
+                </div>
+                <div class="dados_orcamento_grupo">
+                    <h3 class="titulo_padrao">Parcelas</h3>
+                        <table>
+                            <thead>
+                                <tr class="table_cabecalho">
+                                    <th>Data</th>
+                                    <th>Valor</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for parcela in orcamento.parcela_orcamento_set.all %}
+                                <tr>
+                                    <td class="table_item">{{ parcela.data_parcela|date:"d/m/Y" }}</td>
+                                    <td class="table_item_valor">{{ parcela.valor_parcela }}</td>
+                                    <td><a href="{% url 'editar_parcela' parcela.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/><a href="{% url 'excluir_parcela' parcela.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    <div class="submenu">
+                        <div class="submenu_item">
+                           <a href="{% url 'adicionar_parcela' orcamento_id=orcamento.id %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Adicionar Parcela"/></a>
+                        </div>
+                    </div>                  
+                </div>     
+            </div>
+            <h2 class="titulo_padrao">Itens do Orçamento</h2>
+            <div class="submenu">
+                <div class="submenu_item">
+                    <a href="{% url 'cadastro_item_orcamento' orcamento_id=orcamento.id %}"><button class="btn_padrao">Adicionar Item ao Orçamento</button></a>
+                </div>
+                <div class="submenu_item">
+                    <a href="{% url 'importar_produtos' orcamento_id=orcamento.id %}"><button class="btn_padrao">Importar Produtos do Carrinho</button></a>
+                </div>
+            </div>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr class="table_cabecalho">
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Valor Unitário</th>
+                            <th>Total</th>
+                            <th>Ações</th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in itens_orcamento %}
+                        <tr>
+                            <td class="table_item">{{ item.produto.nome }}</td>
+                            <td class="table_item_quantidade">{{ item.quantidade }}</td>
+                            <td class="table_item_valor">{{ item.valor_unitario }}</td>
+                            <td class="table_item_valor">{{ item.valor_total }}</td>
+                            <td class="table_item_quantidade"><a href="{% url 'editar_item_orcamento' item.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a><a href="{% url 'excluir_item_orcamento' item.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+   </div> 
+</div>
+ 
+
+    
+ {% endblock %}
+

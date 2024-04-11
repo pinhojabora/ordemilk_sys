@@ -1,0 +1,36 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+<h1 class="titulo-page">Lista de Preços</h1>
+<div class="table-responsive">
+    <table class="table tabela">
+        <thead>
+            <tr>
+                <th>Lista</th>
+                <th>Período</th>
+                <th>Vigência</th>
+                <th>Ações</th> <!-- Nova coluna para ações -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for lista in listas %}
+            <tr class="tabela-item">
+                <td>{{ lista.nome_lista }}</td>
+                <td>{{ lista.periodo }}</td>
+                <td>{{ lista.vigencia }}</td>
+                                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="btn-local">
+    <a href="{% url 'cadastro_lista'%}">
+        <button class="btn-geral">Cadastrar Lista de Preços</button>
+    </a>
+</div>
+
+
+{% endblock %}

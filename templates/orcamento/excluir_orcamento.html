@@ -1,0 +1,27 @@
+{% extends 'shared/base.html' %}
+{% block content %}
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Confirmação de Exclusão</h1>
+            <h3 class="subtitulo_padrao">Tem certeza que deseja excluir o orçamento do cliente "{{ orcamento.nome_cliente }}"?</h3>
+                <div class="submenu">
+                    <div class="submenu_item">
+                        <form method="post">
+                             {% csrf_token %}
+                            <button class="btn_padrao" type="submit" name="confirmacao">Excluir</button>
+                        </form>
+                    </div>
+                    <div class="submenu_item">
+                        <a href="{% url 'index_orcamento' %}"><button class="btn_padrao">Cancelar</button></a>
+                    </div>
+                </div>
+                
+                    
+                
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

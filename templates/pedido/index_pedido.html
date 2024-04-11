@@ -1,0 +1,56 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <div class="centro">
+            <h1 class="titulo_padrao">Pedidos</h1>
+                <div class="submenu">
+                    <div class="submenu_item">
+                        <form action="{% url 'buscar_pedido'%}">
+                            <input type="text" name="buscar_pedido" placeholder="Digite o cliente ou a data">
+                                <button class="btn_padrao2" type="submit">
+                                    <img class="table_icone" src="{% static '/assets/ícones/lupa.png' %}" alt="ícone de search">
+                                </button>
+                        </form>
+                    </div>
+                    <div class="submenu_item">
+                        <a href="{% url 'cadastro_pedido'%}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Pedido"/></a>
+                    </div>
+                </div>
+           
+                <div class="titulo_padrao">
+                    
+                </div>
+                
+            <table class="table">
+                            <thead>
+                                <tr class="table_cabecalho">
+                                    <th>Data</th>
+                                    <th>Cliente</th>
+                                    <th>Valor Total</th>
+                                    <th>Ações</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pedido in pedidos %}
+                                <tr>
+                                    <td>{{ pedido.data_pedido|date:"d/m/Y" }}</td>
+                                    <td>{{ pedido.nome_cliente }}</td>
+                                    <td>{{ pedido.valor_total }}</td>
+                                    <td class="table_item_quantidade"><a href="{% url 'detalhes_pedido' pedido.id %}"><img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/></a>
+                                        <a href="{% url 'editar_pedido' pedido.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
+                                        <a href="{% url 'excluir_pedido' pedido.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                                    
+                                                    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+ 
+{% endblock %}

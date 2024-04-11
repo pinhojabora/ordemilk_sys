@@ -1,0 +1,40 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+        <div class="centro">
+        <h1 class="titulo_padrao">Categoria</h1>
+        <div class="submenu_item">
+            <a href="{% url 'cadastro_categoria' %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Categoria"/></a>
+        </div>
+            <table class="table">
+                <thead>
+                    <tr class="table_cabecalho">
+                        <th>Descrição</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for categoria in categorias %}
+                    <tr class="tabela-item">
+                        <td>{{ categoria.nome }}</td>
+                        <td><a href="{% url 'editar_categoria' categoria.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
+                            <a href="{% url 'excluir_categoria' categoria.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+
+
+                
+        </div>
+    </div>
+</div>
+
+
+    
+{% endblock %}
