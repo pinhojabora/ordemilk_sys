@@ -9,11 +9,11 @@
                 <div class="submenu_item">
                     <form action="{% url 'buscar_orcamento'%}">
                         <input type="text" name="buscar_orcamento" placeholder="Digite o cliente ou a data">
-                        <button type="submit" class="btn_padrao2"><img class="table_icone" src="{% static '/assets/ícones/lupa.png' %}" alt="ícone de search"></button>
+                        <button type="submit" class="btn_padrao2"><img class="table_icone" src="{% static 'Assets/icones/lupa.png' %}" alt="ícone de search"></button>
                     </form>
                 </div>
                 <div class="submenu_item">
-                    <a href="{% url 'cadastro_orcamento' %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Orçamento"/></a>
+                    <a href="{% url 'cadastro_orcamento' %}"><img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Cadastrar Orçamento"/></a>
                 </div>
             </div>                    
             <table class="table">
@@ -32,9 +32,9 @@
                         <td>{{ orcamento.nome_cliente }}</td>
                         <td>{{ orcamento.valor_total }}</td>
                         <td>
-                            <a href="{% url 'detalhes_orcamento' orcamento.id %}"><img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/></a>
-                            <a href="{% url 'excluir_orcamento' orcamento.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a>
-                            <a href="{% url 'converter_orcamento_para_pedido' orcamento.id %}"><img class="table_icone" src="{% static '/assets/ícones/pedido-processado.png' %}" title="Converter em pedido"/></a>
+                            <a href="{% url 'detalhes_orcamento' orcamento.id %}"><img class="table_icone" src="{% static 'Assets/icones/detalhes.png' %}" title="Mais detalhes"/></a>
+                            <a href="{% url 'excluir_orcamento' orcamento.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a>
+                            <a href="{% url 'converter_orcamento_para_pedido' orcamento.id %}"><img class="table_icone" src="{% static 'Assets/icones/pedido-processado.png' %}" title="Converter em pedido"/></a>
                         </td>
                     </tr>
                 {% endfor %}

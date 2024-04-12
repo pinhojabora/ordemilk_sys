@@ -36,7 +36,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="configurador_id" value="{{ configurador.id }}">
                                     <input type="hidden" name="produto_id" value="{{ produto.id }}">
-                                    <button class="btn_padrao2" type="submit"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Adicionar"/></button>
+                                    <button class="btn_padrao2" type="submit"><img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Adicionar"/></button>
                                 </form>
                                     {% empty %}
                                     <li>Nenhum produto relacionado à nobreak encontrado.</li>

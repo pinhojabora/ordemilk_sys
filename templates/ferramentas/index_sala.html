@@ -6,7 +6,7 @@
             <div class="centro">
                 <h1 class="titulo_padrao">Modelo de sala</h1>
                 <div class="submenu_item">
-                    <a href="{% url 'cadastro_sala' %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Modelo de Sala"/></a>
+                    <a href="{% url 'cadastro_sala' %}"><img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Cadastrar Modelo de Sala"/></a>
                 </div>
                 <div>
                     <table class="table">
@@ -20,8 +20,8 @@
                             {% for modelo_sala in modelo_salas %}
                             <tr>
                                 <td>{{ modelo_sala.modelo_sala_nome }}</td>
-                                <td><a href="{% url 'editar_sala' modelo_sala.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
-                                    <a href="{% url 'excluir_sala' modelo_sala.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                                <td><a href="{% url 'editar_sala' modelo_sala.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>
+                                    <a href="{% url 'excluir_sala' modelo_sala.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>
                             </tr>
                             {% endfor %}
                         </tbody>

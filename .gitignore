@@ -75,7 +75,7 @@ cover/
 
 # Flask stuff:
 instance/
-.webassets-cache
+.webAssets-cache
 
 # Scrapy stuff:
 .scrapy

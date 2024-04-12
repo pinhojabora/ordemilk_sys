@@ -8,10 +8,10 @@
                 <h1 class="titulo_padrao">{{ produto.nome }}</h1>
                 <div class="submenu">
                     <div class="submenu_item">
-                    <a href="{% url 'editar_produto' produto.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
+                    <a href="{% url 'editar_produto' produto.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>
                     </div>
                     <div class="submenu_item">
-                    <a href="{% url 'cadastro_produto' %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Produto"/></a>
+                    <a href="{% url 'cadastro_produto' %}"><img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Cadastrar Produto"/></a>
                     </div>
                 </div>
                 <table class="table">

@@ -15,7 +15,7 @@
                         <option value="{{ categoria.id }}" {% if categoria.id == categoria_selecionada %}selected{% endif %}>{{ categoria.nome }}</option>
                     {% endfor %}
                 </select>
-                <button type="submit" class="btn_padrao2"><img class="table_icone" src="{% static '/assets/ícones/filtro.png' %}" title="Cadastrar"/></button>
+                <button type="submit" class="btn_padrao2"><img class="table_icone" src="{% static 'Assets/icones/filtro.png' %}" title="Cadastrar"/></button>
                 </form>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                             <form action="{% url 'adicionar_carrinho' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="produto_id" value="{{ produto.id }}">
-                            <button class="btn_padrao2" type="submit"><img class="table_icone" src="{% static '/assets/ícones/carrinho.png' %}" alt="Importar Produtos" /></button>
+                            <button class="btn_padrao2" type="submit"><img class="table_icone" src="{% static 'Assets/icones/carrinho.png' %}" alt="Importar Produtos" /></button>
                         </form>
                     </td>
                     </tr>

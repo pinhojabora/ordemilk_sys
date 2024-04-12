@@ -50,14 +50,14 @@
                                 <tr>
                                     <td class="table_item">{{ parcela.data_parcela|date:"d/m/Y" }}</td>
                                     <td class="table_item_valor">{{ parcela.valor_parcela }}</td>
-                                    <td><a href="{% url 'editar_parcela' parcela.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/><a href="{% url 'excluir_parcela' parcela.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                                    <td><a href="{% url 'editar_parcela' parcela.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/><a href="{% url 'excluir_parcela' parcela.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     <div class="submenu">
                         <div class="submenu_item">
-                           <a href="{% url 'adicionar_parcela' orcamento_id=orcamento.id %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Adicionar Parcela"/></a>
+                           <a href="{% url 'adicionar_parcela' orcamento_id=orcamento.id %}"><img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Adicionar Parcela"/></a>
                         </div>
                     </div>                  
                 </div>     
@@ -89,7 +89,7 @@
                             <td class="table_item_quantidade">{{ item.quantidade }}</td>
                             <td class="table_item_valor">{{ item.valor_unitario }}</td>
                             <td class="table_item_valor">{{ item.valor_total }}</td>
-                            <td class="table_item_quantidade"><a href="{% url 'editar_item_orcamento' item.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a><a href="{% url 'excluir_item_orcamento' item.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                            <td class="table_item_quantidade"><a href="{% url 'editar_item_orcamento' item.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a><a href="{% url 'excluir_item_orcamento' item.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

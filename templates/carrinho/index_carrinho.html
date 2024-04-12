@@ -23,8 +23,8 @@
                         <td>R$ {{ carrinho.valor_unitario|floatformat:"2" }}</td> <!-- Formatando o valor unitário -->
                         <td>R$ {{ carrinho.valor_total|floatformat:"2" }}</td> <!-- Formatando o valor total -->
                         <td>
-                            <a href="{% url 'editar_carrinho' carrinho.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
-                            <a href="{% url 'excluir_item_carrinho' carrinho.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a>
+                            <a href="{% url 'editar_carrinho' carrinho.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>
+                            <a href="{% url 'excluir_item_carrinho' carrinho.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a>
                         </td>
                     </tr>
                     {% endfor %}

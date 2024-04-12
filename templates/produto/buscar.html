@@ -23,12 +23,12 @@
                 <td>{{ produto.codigo }}</td>
                 <td>{{ produto.nome }}</td>
                 <td>{{ produto.categoria }}</td>
-                <td><a href="{% url 'detalhes_produto' produto.id %}"><img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/></a></td>
-                <td><a href="{% url 'editar_produto' produto.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a></td>
+                <td><a href="{% url 'detalhes_produto' produto.id %}"><img class="table_icone" src="{% static 'Assets/icones/detalhes.png' %}" title="Mais detalhes"/></a></td>
+                <td><a href="{% url 'editar_produto' produto.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a></td>
                 <td><form action="{% url 'adicionar_carrinho' %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="produto_id" value="{{ produto.id }}">
-                        <button class="btn_padrao2" type="submit"><img class="table_icone" src="{% static '/assets/ícones/carrinho.png' %}" alt="Importar Produtos" /></button>
+                        <button class="btn_padrao2" type="submit"><img class="table_icone" src="{% static 'Assets/icones/carrinho.png' %}" alt="Importar Produtos" /></button>
                     </form>
                 </td>
             </tr>

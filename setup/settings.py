@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'apps.configurador.apps.ConfiguradorConfig',
     'apps.ferramentas.apps.FerramentasConfig',
     'apps.carrinho.apps.CarrinhoConfig',
+
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -126,10 +128,55 @@ USE_I18N = True
 USE_TZ = True
 
 
+# AWS Configuração
+
+AWS_ACCESS_KEY_ID = str(os.getenv('AWS_ACCESS_KEY_ID'))
+
+AWS_SECRET_ACCESS_KEY = str(os.getenv('AWS_SECRET_ACCESS_KEY'))
+
+AWS_STORAGE_BUCKET_NAME = str(os.getenv('AWS_STORAGE_BUCKET_NAME'))
+
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+AWS_DEFAULT_ACL = 'public-read'
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400'
+}
+
+AWS_LOCATION = 'static'
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_HEADERS = {
+    'Access-Control-Allow-Origin': '*',
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "access_key": str(os.getenv('AWS_ACCESS_KEY_ID')),
+            "secret_key": str(os.getenv('AWS_SECRET_ACCESS_KEY')),
+            "bucket_name": str(os.getenv('AWS_STORAGE_BUCKET_NAME'))
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "access_key": str(os.getenv('AWS_ACCESS_KEY_ID')),
+            "secret_key": str(os.getenv('AWS_SECRET_ACCESS_KEY')),
+            "bucket_name": str(os.getenv('AWS_STORAGE_BUCKET_NAME'))
+        },
+    },
+}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+
+
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 
 STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'setup/static')
@@ -141,7 +188,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 
-MEDIA_URL = "/media/"
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 
 # Default primary key field type

@@ -15,7 +15,7 @@
                                 <li class="card_foto">
                                     <a href="{% url 'imagem' fotografia.id %}">
                                     {% if fotografia.foto == "" or fotografia.foto == null %}
-                                        <img class="card__imagem2" src="{% static 'assets/imagens/not-found.png'%}" alt="foto">
+                                        <img class="card__imagem2" src="{% static 'Assets/imagens/not-found.png'%}" alt="foto">
                                     {% else %}
                                         <img class="card__imagem2" src="{{ fotografia.foto.url }}" alt="foto">
                                     {% endif %}

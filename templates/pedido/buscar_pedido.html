@@ -23,8 +23,8 @@
                                 <td>{{ pedido.data_pedido }}</td>
                                 <td>{{ pedido.nome_cliente }}</td>
                                 <td>{{ pedido.valor_total }}</td>
-                                <td><a href="{% url 'detalhes_pedido' pedido.id %}"><img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/></a></td>
-                                <td><a href="{% url 'excluir_pedido' pedido.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                                <td><a href="{% url 'detalhes_pedido' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/detalhes.png' %}" title="Mais detalhes"/></a></td>
+                                <td><a href="{% url 'excluir_pedido' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>
                             </tr>
                             {% endfor %}
                             {% else %}

@@ -6,7 +6,7 @@
         <div class="centro">
             <h1 class="titulo_padrao">Tensão de energia</h1>
             <div class="submenu_item">
-                <a href="{% url 'cadastro_tensao' %}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Tensão"/></a>
+                <a href="{% url 'cadastro_tensao' %}"><img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Cadastrar Tensão"/></a>
             </div>
             <div>
                 <table class="table">
@@ -20,8 +20,8 @@
                         {% for tensao_energia in tensao_energias %}
                         <tr>
                             <td>{{ tensao_energia.tensao_energia_nome }}</td>
-                            <td><a href="{% url 'editar_tensao' tensao_energia.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
-                                <a href="{% url 'excluir_tensao' tensao_energia.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                            <td><a href="{% url 'editar_tensao' tensao_energia.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>
+                                <a href="{% url 'excluir_tensao' tensao_energia.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

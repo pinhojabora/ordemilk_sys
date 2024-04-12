@@ -6,7 +6,7 @@
                         <div class=" container-foto">
                             <div class="quadro">
                                 {% if fotografia.foto == "" or fotografia.foto == null %}
-                                <img class="foto-imagem" src="{% static 'assets/imagens/not-found.png'%}">
+                                <img class="foto-imagem" src="{% static 'Assets/imagens/not-found.png'%}">
                                 {% else %}
                                 <img class="foto-imagem" src="{{fotografia.foto.url}}">
                                 {% endif %}
@@ -17,10 +17,10 @@
                                         <p>{{fotografia.legenda}}</p>
                                         <p>{{fotografia.descricao}}</p>
                                         <div>
-                                            <a href="{% url 'editar_imagem' fotografia.id%}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
+                                            <a href="{% url 'editar_imagem' fotografia.id%}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>
                                         </div>
                                         <div>
-                                            <a href="{% url 'excluir_imagem' fotografia.id%}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a>
+                                            <a href="{% url 'excluir_imagem' fotografia.id%}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a>
                                         </div>
                                     </div>
                                     

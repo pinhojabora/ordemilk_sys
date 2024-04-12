@@ -10,12 +10,12 @@
                         <form action="{% url 'buscar_pedido'%}">
                             <input type="text" name="buscar_pedido" placeholder="Digite o cliente ou a data">
                                 <button class="btn_padrao2" type="submit">
-                                    <img class="table_icone" src="{% static '/assets/ícones/lupa.png' %}" alt="ícone de search">
+                                    <img class="table_icone" src="{% static 'Assets/icones/lupa.png' %}" alt="ícone de search">
                                 </button>
                         </form>
                     </div>
                     <div class="submenu_item">
-                        <a href="{% url 'cadastro_pedido'%}"><img class="table_icone" src="{% static '/assets/ícones/inserir.png' %}" title="Cadastrar Pedido"/></a>
+                        <a href="{% url 'cadastro_pedido'%}"><img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Cadastrar Pedido"/></a>
                     </div>
                 </div>
            
@@ -39,9 +39,9 @@
                                     <td>{{ pedido.data_pedido|date:"d/m/Y" }}</td>
                                     <td>{{ pedido.nome_cliente }}</td>
                                     <td>{{ pedido.valor_total }}</td>
-                                    <td class="table_item_quantidade"><a href="{% url 'detalhes_pedido' pedido.id %}"><img class="table_icone" src="{% static '/assets/ícones/detalhes.png' %}" title="Mais detalhes"/></a>
-                                        <a href="{% url 'editar_pedido' pedido.id %}"><img class="table_icone" src="{% static '/assets/ícones/editar.png' %}" title="Editar"/></a>
-                                        <a href="{% url 'excluir_pedido' pedido.id %}"><img class="table_icone" src="{% static '/assets/ícones/excluir.png' %}" title="Excluir"/></a></td>
+                                    <td class="table_item_quantidade"><a href="{% url 'detalhes_pedido' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/detalhes.png' %}" title="Mais detalhes"/></a>
+                                        <a href="{% url 'editar_pedido' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>
+                                        <a href="{% url 'excluir_pedido' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>
                                     
                                                     
                                 </tr>
