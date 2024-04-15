@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserChangeForm
 
 class LoginForms(forms.Form):
         nome_login=forms.CharField(
@@ -79,4 +80,6 @@ class CadastroForms(forms.Form):
                 raise forms.ValidationError('Senhas não são iguais')
             else:
                 return senha_2
+
+
 

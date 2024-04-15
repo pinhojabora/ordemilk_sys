@@ -30,7 +30,7 @@ def cadastro_configurador(request):
     if request.method == 'POST':
         form = ConfiguradorForms(request.POST)
         if form.is_valid():
-            form.save()
+            form.save(user=request.user)
             messages.success(request, 'Configuração cadastrada com sucesso!')
             return redirect('index_configurador')
         else:
@@ -490,6 +490,7 @@ def converter_configuracao_orcamento(request, configurador_id):
             fone=configurador.fone,
             email=configurador.email,
             observacao=configurador.observacao,
+            usuario=configurador.usuario,
         )
         
         # Copiar itens do orçamento para o pedido

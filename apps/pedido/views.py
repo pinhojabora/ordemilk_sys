@@ -27,7 +27,7 @@ def cadastro_pedido(request):
     if request.method == 'POST':
         form = PedidoForms(request.POST)
         if form.is_valid():
-            form.save()
+            form.save(user=request.user)
             messages.success(request, 'Pedido cadastrado com sucesso!')
             return redirect('index_pedido')
         else:

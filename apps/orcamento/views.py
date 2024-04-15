@@ -31,7 +31,7 @@ def cadastro_orcamento(request):
     if request.method == 'POST':
         form = OrcamentoForms(request.POST)
         if form.is_valid():
-            form.save()
+            form.save(user=request.user)
             messages.success(request, 'Orçamento cadastrado com sucesso!')
             return redirect('index_orcamento')
         else:
@@ -291,6 +291,7 @@ def converter_orcamento_pedido(request, orcamento_id):
             saldo=orcamento.saldo,
             parcelas=orcamento.parcelas,
             observacao=orcamento.observacao,
+            usuario=orcamento.usuario,
         )
         
         # Copiar itens do orçamento para o pedido

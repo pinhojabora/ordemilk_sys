@@ -9,32 +9,33 @@ from django.http import HttpResponse
 from django.db.models import Q
 
 def lista_produto(request):
-        if not request.user.is_authenticated:
-                messages.error(request, 'Usuário não logado')
-                return redirect('login')
+    if not request.user.is_authenticated:
+        messages.error(request, 'Usuário não logado')
+        return redirect('login')
 
-        produtos = Produto.objects.all().order_by('nome')  # Ordena os produtos por nome
-        categorias = Categoria.objects.all().order_by('nome')  # Ordena as categorias por nome
-        categoria_id = request.GET.get('categoria')
+    produtos = Produto.objects.all().order_by('nome')  # Ordena os produtos por nome
+    categorias = Categoria.objects.all().order_by('nome')  # Ordena as categorias por nome
+    categoria_id = request.GET.get('categoria')
 
-        if categoria_id:
-            categoria_selecionada = Categoria.objects.get(id=categoria_id)
-            produtos_categoria = Produto.objects.filter(categoria=categoria_selecionada).order_by('nome')  # Ordena os produtos por nome
-        else:
-            categoria_selecionada = '0'
-            produtos_categoria = Produto.objects.all().order_by('nome')  # Ordena os produtos por nome
+    if categoria_id:
+        categoria_selecionada = Categoria.objects.get(id=categoria_id)
+        produtos_categoria = Produto.objects.filter(categoria=categoria_selecionada).order_by('nome')  # Ordena os produtos por nome
+    else:
+        categoria_selecionada = '0'
+        produtos_categoria = Produto.objects.all().order_by('nome')  # Ordena os produtos por nome
 
     # Agrupar os produtos por subcategoria
-        produtos_agrupados = {}
-        for produto in produtos_categoria:
-                if produto.subcategoria not in produtos_agrupados:
-                 produtos_agrupados[produto.subcategoria] = []
-                 produtos_agrupados[produto.subcategoria].append(produto)
+    produtos_agrupados = {}
+
+    for produto in produtos_categoria:
+        if produto.subcategoria not in produtos_agrupados:
+            produtos_agrupados[produto.subcategoria] = []
+        produtos_agrupados[produto.subcategoria].append(produto)
 
     # Ordenar o dicionário de produtos_agrupados pelas chaves (subcategorias)
-        produtos_agrupados = dict(sorted(produtos_agrupados.items(), key=lambda x: x[0].nome if x[0] is not None else ''))
+    produtos_agrupados = dict(sorted(produtos_agrupados.items(), key=lambda x: x[0].nome if x[0] is not None else ''))
 
-        return render(request, 'produto/produto.html', {
+    return render(request, 'produto/produto.html', {
         'produtos_agrupados': produtos_agrupados,
         'categorias': categorias,
         'categoria_selecionada': categoria_selecionada,

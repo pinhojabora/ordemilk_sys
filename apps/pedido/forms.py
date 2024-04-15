@@ -6,7 +6,7 @@ class PedidoForms(forms.ModelForm):
         class Meta:
                 model = Pedido
                 fields = '__all__'
-                exclude = ['entrada', 'saldo']
+                exclude = ['entrada', 'saldo', 'usuario']
                 labels = {
             'data_pedido':'Data',
             'nome_cliente':'Cliente',
@@ -23,7 +23,7 @@ class PedidoForms(forms.ModelForm):
             'valor_total': 'Valor total',
             'parcelas': 'Parcelas',
             'observacao': 'Observações',
-
+            
         }
 
 
@@ -49,6 +49,13 @@ class PedidoForms(forms.ModelForm):
          'valor_total': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
          'parcelas': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
          'observacao': forms.Textarea(attrs={'class':'form-control'}),
- 
+         
         }
 
+        def save(self, commit=True, user=None):
+            instance = super(PedidoForms, self).save(commit=False)
+            if user:
+                instance.usuario = user
+            if commit:
+                instance.save()
+            return instance

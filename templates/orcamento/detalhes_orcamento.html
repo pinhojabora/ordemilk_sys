@@ -23,6 +23,7 @@
                     <p class="dados_orcamento_legenda">Entrada:</p><p class="dados_orcamento_input_valor">{{ orcamento.entrada }}</p>
                     <p class="dados_orcamento_legenda">Saldo:</p><p class="dados_orcamento_input_valor">{{ orcamento.saldo }}</p>
                     <p class="dados_orcamento_legenda">Parcelas:</p><p class="dados_orcamento_input">{{ orcamento.parcelas }}</p>
+                    <p class="dados_orcamento_legenda">Vendedor:</p><p class="dados_orcamento_input">{{ orcamento.usuario }}</p>
                     <div class="submenu">
                         <div class="submenu_item">
                            <a href="{% url 'editar_entrada_orcamento' orcamento_id=orcamento.id %}"><button class="btn_padrao">Lançar Entrada</button></a> 

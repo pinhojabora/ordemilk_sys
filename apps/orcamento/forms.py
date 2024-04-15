@@ -6,7 +6,7 @@ class OrcamentoForms(forms.ModelForm):
         class Meta:
                 model = Orcamento
                 fields = '__all__'
-                exclude = ['entrada', 'saldo']
+                exclude = ['entrada', 'saldo', 'usuario']
                 labels = {
             'data_orcamento':'Data',
             'nome_cliente':'Cliente',
@@ -51,7 +51,13 @@ class OrcamentoForms(forms.ModelForm):
          'observacao': forms.Textarea(attrs={'class':'form-control'}),
  
         }
-
+        def save(self, commit=True, user=None):
+            instance = super(OrcamentoForms, self).save(commit=False)
+            if user:
+                instance.usuario = user
+            if commit:
+                instance.save()
+            return instance
 
 class ItemOrcamentoEditarForm(forms.ModelForm):
     acrescimo = forms.DecimalField(required=False, label='Acréscimo (%)')

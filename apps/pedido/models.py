@@ -4,6 +4,7 @@ from datetime import datetime, date
 
 from apps.produto.models import Produto
 
+from django.contrib.auth.models import User
 class Pedido(models.Model):
     OPCOES_FORPAGAMENTO = [
         ("A VISTA","A Vista"),
@@ -30,12 +31,18 @@ class Pedido(models.Model):
     email = models.CharField(max_length=100, null=False, blank=False, default='')
     forma_pagamento = models.CharField(max_length=100, choices=OPCOES_FORPAGAMENTO, default='')
     pagamento = models.CharField(max_length=100, choices=OPCOES_PAGAMENTO, default='')
-    valor_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    valor_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     entrada = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     saldo = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    parcelas = models.CharField(max_length=100, null=False, blank=False, default='')
+    parcelas = models.CharField(max_length=100, null=False, blank=False, default=0)
     observacao = models.TextField(null=False, blank=False)
-    
+    usuario = models.ForeignKey(
+        to=User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='pedido'
+    )
 
     def __str__(self):
         return self.nome_cliente

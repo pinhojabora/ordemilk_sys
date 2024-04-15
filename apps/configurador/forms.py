@@ -6,7 +6,7 @@ class ConfiguradorForms(forms.ModelForm):
         class Meta:
                 model = Configurador
                 fields = '__all__'
-                exclude = []
+                exclude = ['usuario']
                 labels = {
             'data_configurador':'Data',
             'nome_cliente':'Cliente',
@@ -43,7 +43,13 @@ class ConfiguradorForms(forms.ModelForm):
          'observacao': forms.Textarea(attrs={'class':'form-control'}),
  
         }
-
+        def save(self, commit=True, user=None):
+            instance = super(ConfiguradorForms, self).save(commit=False)
+            if user:
+                instance.usuario = user
+            if commit:
+                instance.save()
+            return instance
 class ItemConfiguradorForm(forms.Form):
     configurador_id = forms.IntegerField(widget=forms.HiddenInput())
     produto_id = forms.IntegerField(widget=forms.HiddenInput())
