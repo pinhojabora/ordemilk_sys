@@ -9,7 +9,7 @@ body {
     box-sizing: border-box;
     background-color: #f6f6f6;
     color: #000000;
-    background-image: linear-gradient( rgba(255,255,255,.9) 0%,rgba(255,255,255,.9) 100%), url('..Assets/imagens/om_sem_fundo.png');/*Aqui você coloca o link da sua imagem*/
+    background-image: linear-gradient( rgba(255,255,255,.9) 0%,rgba(255,255,255,.9) 100%), url("https://ordemilk-sys.s3.us-east-2.amazonaws.com/static/Assets/imagens/om_sem_fundo.png");/*Aqui você coloca o link da sua imagem*/
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;

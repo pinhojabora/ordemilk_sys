@@ -12,16 +12,26 @@ from django.http import HttpResponse
 from django.db.models import Sum
 from decimal import Decimal
 from django.db.models import Q
-from datetime import datetime
-
+from datetime import datetime, timedelta
+from django.utils import timezone
+from django.db.models import F
+from django.db.models.functions import Cast
 
 def lista_orcamento(request):
-        if not request.user.is_authenticated:
-                messages.error(request, 'Usuário não logado')
-                return redirect('login')
+    if not request.user.is_authenticated:
+        messages.error(request, 'Usuário não logado')
+        return redirect('login')
 
-        orcamentos = Orcamento.objects.all()
-        return render(request, 'orcamento/index_orcamento.html',{"orcamentos":orcamentos})
+    # Atualizar os dias faltantes para todos os orçamentos
+    for orcamento in Orcamento.objects.all():
+        dias_faltantes = (orcamento.vencimento_orcamento - timezone.now().date()).days
+        orcamento.dias_faltantes = f'{dias_faltantes} dias'
+        orcamento.save()
+
+    # Ordenar os orçamentos pelo campo dias_faltantes
+    orcamentos = Orcamento.objects.all().order_by('dias_faltantes')
+
+    return render(request, 'orcamento/index_orcamento.html', {"orcamentos": orcamentos})
 
 def cadastro_orcamento(request):
     if not request.user.is_authenticated:
@@ -31,7 +41,10 @@ def cadastro_orcamento(request):
     if request.method == 'POST':
         form = OrcamentoForms(request.POST)
         if form.is_valid():
-            form.save(user=request.user)
+            orcamento = form.save(commit=False)  # Salva o formulário, mas não persiste no banco de dados ainda
+            orcamento.usuario = request.user  # Define o usuário associado ao orçamento
+            orcamento.vencimento_orcamento = orcamento.data_orcamento + timedelta(days=30)  # Define a data de vencimento
+            orcamento.save()  # Agora sim, salva no banco de dados
             messages.success(request, 'Orçamento cadastrado com sucesso!')
             return redirect('index_orcamento')
         else:

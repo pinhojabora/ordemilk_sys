@@ -6,7 +6,7 @@ class OrcamentoForms(forms.ModelForm):
         class Meta:
                 model = Orcamento
                 fields = '__all__'
-                exclude = ['entrada', 'saldo', 'usuario']
+                exclude = ['entrada', 'saldo', 'usuario', 'vencimento_orcamento', 'dias_faltantes']
                 labels = {
             'data_orcamento':'Data',
             'nome_cliente':'Cliente',

@@ -22,6 +22,8 @@
                         <th>Data</th>
                         <th>Cliente</th>
                         <th>Valor Total</th>
+                        <th>Validade</th>
+                        <th>Dias Faltantes</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -31,6 +33,8 @@
                         <td>{{ orcamento.data_orcamento|date:"d/m/Y" }}</td>
                         <td>{{ orcamento.nome_cliente }}</td>
                         <td>{{ orcamento.valor_total }}</td>
+                        <td>{{ orcamento.vencimento_orcamento }}</td>
+                        <td>{{ orcamento.dias_faltantes }}</td>
                         <td>
                             <a href="{% url 'detalhes_orcamento' orcamento.id %}"><img class="table_icone" src="{% static 'Assets/icones/detalhes.png' %}" title="Mais detalhes"/></a>
                             <a href="{% url 'excluir_orcamento' orcamento.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a>
