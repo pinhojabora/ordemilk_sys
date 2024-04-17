@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from apps.configurador.models import Configurador
+
+admin.site.register(Configurador)

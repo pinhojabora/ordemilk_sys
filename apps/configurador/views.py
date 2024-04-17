@@ -7,7 +7,7 @@ from apps.configurador.models import Configurador, Item_configurador
 from apps.produto.models import Produto
 from apps.ferramentas.models import Tipo_contencao
 from apps.orcamento.models import Orcamento, Item_orcamento
-
+from apps.dashboard.models import Estatistica_user, Estatistica_geral
 from apps.orcamento.views import lista_orcamento
 
 from django.http import HttpResponse
@@ -31,6 +31,17 @@ def cadastro_configurador(request):
         form = ConfiguradorForms(request.POST)
         if form.is_valid():
             form.save(user=request.user)
+            
+            # Atualiza as estatísticas do usuário
+            estatistica_user = Estatistica_user.objects.get_or_create(user=request.user)[0]
+            estatistica_user.configuracao += 1
+            estatistica_user.save()
+
+            # Atualiza as estatísticas gerais
+            estatistica_geral = Estatistica_geral.objects.first()
+            estatistica_geral.configuracao += 1
+            estatistica_geral.save()
+
             messages.success(request, 'Configuração cadastrada com sucesso!')
             return redirect('index_configurador')
         else:

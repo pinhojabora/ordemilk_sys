@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
+from decimal import Decimal
 from apps.orcamento.forms import OrcamentoForms, ItemOrcamentoInserirForm, ItemOrcamentoEditarForm, AdicionarParcelaForm
-
+from apps.dashboard.models import Estatistica_user, Estatistica_geral
 from django.contrib import messages
 from apps.pedido.views import lista_pedido
 from apps.orcamento.models import Orcamento, Item_orcamento, Parcela_orcamento
@@ -10,7 +10,6 @@ from apps.produto.models import Produto
 from apps.carrinho.models import Carrinho
 from django.http import HttpResponse
 from django.db.models import Sum
-from decimal import Decimal
 from django.db.models import Q
 from datetime import datetime, timedelta
 from django.utils import timezone
@@ -33,6 +32,15 @@ def lista_orcamento(request):
 
     return render(request, 'orcamento/index_orcamento.html', {"orcamentos": orcamentos})
 
+def calcular_efetivacao(orcamento, pedido):
+    orcamento_decimal = Decimal(orcamento)
+    pedido_decimal = Decimal(pedido)
+    
+    if orcamento_decimal == Decimal(0):
+        return Decimal(0)
+    
+    return ((pedido_decimal - orcamento_decimal) / orcamento_decimal) * Decimal(100)
+
 def cadastro_orcamento(request):
     if not request.user.is_authenticated:
                 messages.error(request, 'Usuário não logado')
@@ -45,6 +53,19 @@ def cadastro_orcamento(request):
             orcamento.usuario = request.user  # Define o usuário associado ao orçamento
             orcamento.vencimento_orcamento = orcamento.data_orcamento + timedelta(days=30)  # Define a data de vencimento
             orcamento.save()  # Agora sim, salva no banco de dados
+            
+            # Atualiza as estatísticas do usuário
+            estatistica_user = Estatistica_user.objects.get_or_create(user=request.user)[0]
+            estatistica_user.orcamento += 1
+            estatistica_user.efetivacao = calcular_efetivacao(estatistica_user.orcamento, estatistica_user.pedido)
+            estatistica_user.save()
+
+            # Atualiza as estatísticas gerais
+            estatistica_geral = Estatistica_geral.objects.first()
+            estatistica_geral.orcamento += 1
+            estatistica_geral.efetivacao = calcular_efetivacao(estatistica_geral.orcamento, estatistica_geral.pedido)
+            estatistica_geral.save()
+
             messages.success(request, 'Orçamento cadastrado com sucesso!')
             return redirect('index_orcamento')
         else:
@@ -91,6 +112,18 @@ def excluir_orcamento(request, orcamento_id):
     if request.method == 'POST':
         # Verifica se o usuário confirmou a exclusão do pedido
         if 'confirmacao' in request.POST:
+            # Atualiza as estatísticas do usuário
+            estatistica_user = Estatistica_user.objects.get_or_create(user=request.user)[0]
+            estatistica_user.orcamento -= 1
+            estatistica_user.efetivacao = calcular_efetivacao(estatistica_user.orcamento, estatistica_user.pedido)
+            estatistica_user.save()
+
+            # Atualiza as estatísticas gerais
+            estatistica_geral = Estatistica_geral.objects.first()
+            estatistica_geral.orcamento -= 1
+            estatistica_geral.efetivacao = calcular_efetivacao(estatistica_geral.orcamento, estatistica_geral.pedido)
+            estatistica_geral.save()
+            
             orcamento.delete()
             messages.success(request, 'Orçamento excluído com sucesso!')
             return redirect(lista_orcamento)  

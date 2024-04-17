@@ -3,13 +3,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from apps.pedido.forms import PedidoForms
 
 from django.contrib import messages
-
+from apps.dashboard.models import Estatistica_user, Estatistica_geral
 from apps.pedido.models import Pedido, Item_pedido
 from apps.carrinho.models import Carrinho
 from datetime import datetime
 from django.http import HttpResponse
 
-
+from decimal import Decimal
 
 def lista_pedido(request):
         if not request.user.is_authenticated:
@@ -19,15 +19,39 @@ def lista_pedido(request):
         pedidos = Pedido.objects.all()
         return render(request, 'pedido/index_pedido.html',{"pedidos":pedidos})
 
+def calcular_efetivacao(orcamento, pedido):
+    orcamento_decimal = Decimal(orcamento)
+    pedido_decimal = Decimal(pedido)
+    
+    if orcamento_decimal == Decimal(0):
+        return Decimal(0)
+    
+    return ((pedido_decimal - orcamento_decimal) / orcamento_decimal) * Decimal(100)
+
 def cadastro_pedido(request):
     if not request.user.is_authenticated:
-                messages.error(request, 'Usuário não logado')
-                return redirect('login')
+        messages.error(request, 'Usuário não logado')
+        return redirect('login')
     
     if request.method == 'POST':
         form = PedidoForms(request.POST)
         if form.is_valid():
-            form.save(user=request.user)
+            pedido_instance = form.save(commit=False)
+            pedido_instance.usuario = request.user  # Definindo o usuário do pedido
+            pedido_instance.save()
+
+            # Atualiza as estatísticas do usuário
+            estatistica_user = Estatistica_user.objects.get_or_create(user=request.user)[0]
+            estatistica_user.pedido += 1
+            estatistica_user.efetivacao = calcular_efetivacao(estatistica_user.orcamento, estatistica_user.pedido)
+            estatistica_user.save()
+
+            # Atualiza as estatísticas gerais
+            estatistica_geral = Estatistica_geral.objects.first()
+            estatistica_geral.pedido += 1
+            estatistica_geral.efetivacao = calcular_efetivacao(estatistica_geral.orcamento, estatistica_geral.pedido)
+            estatistica_geral.save()
+
             messages.success(request, 'Pedido cadastrado com sucesso!')
             return redirect('index_pedido')
         else:
@@ -68,14 +92,26 @@ def editar_pedido(request, pedido_id):
 
 def excluir_pedido(request, pedido_id):
     if not request.user.is_authenticated:
-                messages.error(request, 'Usuário não logado')
-                return redirect('login')
+        messages.error(request, 'Usuário não logado')
+        return redirect('login')
     
     pedido = get_object_or_404(Pedido, pk=pedido_id)
     
     if request.method == 'POST':
         # Verifica se o usuário confirmou a exclusão do pedido
         if 'confirmacao' in request.POST:
+            # Atualiza as estatísticas do usuário
+            estatistica_user = Estatistica_user.objects.get_or_create(user=request.user)[0]
+            estatistica_user.pedido -= 1
+            estatistica_user.efetivacao = calcular_efetivacao(estatistica_user.orcamento, estatistica_user.pedido)
+            estatistica_user.save()
+
+            # Atualiza as estatísticas gerais
+            estatistica_geral = Estatistica_geral.objects.first()
+            estatistica_geral.pedido -= 1
+            estatistica_geral.efetivacao = calcular_efetivacao(estatistica_geral.orcamento, estatistica_geral.pedido)
+            estatistica_geral.save()
+
             pedido.delete()
             messages.success(request, 'Pedido excluído com sucesso!')
             return redirect(lista_pedido)  # Redireciona para a página de index de pedidos ou outra página desejada após a exclusão

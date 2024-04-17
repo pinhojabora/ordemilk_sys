@@ -1,3 +1,4 @@
 from django.contrib import admin
+from apps.orcamento.models import Orcamento
 
-# Register your models here.
+admin.site.register(Orcamento)
