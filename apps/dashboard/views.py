@@ -244,7 +244,7 @@ def dashboard_todos_usuarios(request):
         valores_gerais = [estatistica_geral.configuracao, estatistica_geral.orcamento, estatistica_geral.pedido]
 
         bars_geral = axs[0, 0].bar(categorias, valores_gerais, color='black')
-        axs[0, 0].set_title('Estatísticas Gerais')
+        axs[0, 0].set_title('Estatísticas Ordemilk')
         axs[0, 0].set_ylabel('Valores')
 
         for bar in bars_geral:
@@ -253,7 +253,7 @@ def dashboard_todos_usuarios(request):
 
         # Subplot para a efetivação geral
         bars_efetivacao_geral = axs[0, 1].bar(['Efetivação'], [estatistica_geral.efetivacao], color='red')
-        axs[0, 1].set_title('Efetivação Geral')
+        axs[0, 1].set_title('Efetivação Ordemilk')
         axs[0, 1].set_ylabel('Valores')
 
         for bar in bars_efetivacao_geral:
