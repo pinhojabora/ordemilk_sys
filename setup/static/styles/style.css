@@ -697,3 +697,18 @@ button:hover {
   margin: auto;
   
 }
+
+
+.graf-imagem{
+  background-color: #0f5132;
+  width: 75%;
+  text-align: center;
+  
+}
+
+.div-grafico{
+  width: auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
