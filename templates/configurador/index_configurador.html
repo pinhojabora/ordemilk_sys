@@ -19,7 +19,7 @@
                 </thead>
                 <tbody>
                     {% for configurador in configuradores %}
-                    <tr>
+                    <tr class="table_item">
                         <td>{{ configurador.data_configuracao|date:"d/m/Y" }}</td>
                         <td>{{ configurador.nome_cliente }}</td>
                         <td class="table_item_quantidade"><a href="{% url 'configurador_contencao' configurador.id %}"><img class="table_icone" src="{% static 'Assets/icones/configurar.png' %}" title="Configurar"/></a>

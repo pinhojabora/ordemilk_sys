@@ -18,7 +18,7 @@
                     </thead>
                     <tbody>
                         {% for tipo_linha in tipo_linhas %}
-                        <tr>
+                        <tr class="table_item">
                             <td>{{ tipo_linha.tipo_linha_nome }}</td>
                             <td><a href="{% url 'editar_linha' tipo_linha.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>
                                 <a href="{% url 'excluir_linha' tipo_linha.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>

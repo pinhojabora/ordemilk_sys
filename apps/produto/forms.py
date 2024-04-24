@@ -26,7 +26,7 @@ class ProdutoForms(forms.ModelForm):
          'nome': forms.TextInput(attrs={}),
          'codigo': forms.TextInput(attrs={'class':'form-control'}),   
          'unidade': forms.TextInput(attrs={'class':'form-control'}),
-         'descricao': forms.Textarea(attrs={'class':'form-control'}),
+         'descricao': forms.TextInput(attrs={'class':'form-control'}),
          'peso': forms.TextInput(attrs={'class':'form-control'}),
          'dimensoes': forms.TextInput(attrs={'class':'form-control'}),
          'preco': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),

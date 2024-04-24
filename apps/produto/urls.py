@@ -13,6 +13,7 @@ from apps.produto.views import(
                                 excluir_categoria,
                                 editar_subcategoria,
                                 excluir_subcategoria,
+                                importar_preco,
 )
  
 urlpatterns = [
@@ -28,6 +29,7 @@ urlpatterns = [
         path('cadastro_subcategoria', cadastro_subcategoria, name='cadastro_subcategoria'),
         path('editar_categoria/<int:categoria_id>/', editar_categoria, name='editar_categoria'),
         path('excluir_categoria/<int:categoria_id>/', excluir_categoria, name='excluir_categoria'),
-         path('editar_subcategoria/<int:subcategoria_id>/', editar_subcategoria, name='editar_subcategoria'),
+        path('editar_subcategoria/<int:subcategoria_id>/', editar_subcategoria, name='editar_subcategoria'),
         path('excluir_subcategoria/<int:subcategoria_id>/', excluir_subcategoria, name='excluir_subcategoria'),
+        path('importar_preco/', importar_preco, name='importar_preco'),
 ]

@@ -1,22 +1,35 @@
 {% load static %}
 
-
-
-
-      <div class="topnav">
-
-       
-        <div>
-          <form class="split" action="{% url 'buscar'%}">
-            <input class="busca__input" type="text" name="buscar" placeholder="Digite o nome do produto">
-            <button class="btn-busca" type="submit">
-              <img class="busca_icone" src="{% static 'Assets/icones/lupa.png' %}" alt="ícone de search">
-            </button>
-          </form>
-          
+<div class="topo">
+  <div class="topo_esquerda">
+    
+      <div class="menu_lateral">
+        <div class="menu_lateral_item">
+            <a href="{% url 'index' %}"><img class="menu_icone" src="{% static 'Assets/icones/casa.png' %}" title="Home"/></a>
         </div>
         
+        <div class="menu_lateral_item">
+            <a href="{% url 'lista_carrinho' %}"><img class="menu_icone" src="{% static 'Assets/icones/carrinho-de-compras.png' %}" title="Ver Carrinho"/></a>
+        </div>
+        <div class="menu_lateral_item">
+            <a href="{% url 'logout'%}"><img class="menu_icone" src="{% static 'Assets/icones/logar.png' %}" title="Logout"/></a>
+        </div>
       </div>
- 
+    
+  </div>    
+  <div class="topo_direita">
+      <div>
+        <form action="{% url 'buscar'%}">
+          <input type="text" name="buscar" placeholder="Digite o nome do produto">
+          <button class="btn_padrao2" type="submit">
+            <img class="table_icone" src="{% static 'Assets/icones/lupa1.png' %}" alt="ícone de search">
+          </button>
+        </form>
+      </div>
+  </div>
+</div>
 
 
+
+
+  

@@ -6,9 +6,13 @@ from apps.ferramentas.models import Tensao_energia, Modelo_sala, Modelo_equipame
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=100)
+    
         
     def __str__(self):
         return self.nome
+    
+    class Meta:
+        ordering = ['nome']
 
 class Subcategoria(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
@@ -16,6 +20,9 @@ class Subcategoria(models.Model):
 
     def __str__(self):
         return self.nome
+    
+    class Meta:
+        ordering = ['nome']
 
              
 class Produto(models.Model):

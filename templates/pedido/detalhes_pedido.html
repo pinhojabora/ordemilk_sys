@@ -53,7 +53,7 @@
                 </thead>
                 <tbody>
                     {% for item in itens_pedido %}
-                    <tr>
+                    <tr class="table_item">
                         <td class="table_item">{{ item.produto.nome }}</td>
                         <td class="table_item_quantidade">{{ item.quantidade }}</td>
                         <td class="table_item_valor">{{ item.valor_unitario }}</td>

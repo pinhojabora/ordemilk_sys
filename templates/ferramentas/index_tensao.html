@@ -18,7 +18,7 @@
                     </thead>
                     <tbody>
                         {% for tensao_energia in tensao_energias %}
-                        <tr>
+                        <tr class="table_item">
                             <td>{{ tensao_energia.tensao_energia_nome }}</td>
                             <td><a href="{% url 'editar_tensao' tensao_energia.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>
                                 <a href="{% url 'excluir_tensao' tensao_energia.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>

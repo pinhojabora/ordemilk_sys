@@ -3,10 +3,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from apps.produto.forms import ProdutoForms, CategoriaForms, SubcategoriaForms
 
 from django.contrib import messages
-
 from apps.produto.models import Produto, Categoria, Subcategoria
 from django.http import HttpResponse
 from django.db.models import Q
+import pandas as pd
+from apps.ferramentas.forms import UploadExcelForm
 
 def lista_produto(request):
     if not request.user.is_authenticated:
@@ -172,7 +173,7 @@ def lista_categoria(request):
                 messages.error(request, 'Usuário não logado')
                 return redirect('login')
 
-        categorias = Categoria.objects.all()
+        categorias = Categoria.objects.all().order_by('nome')
         return render(request, 'produto/categoria.html',{"categorias":categorias})
 
 def lista_subcategoria(request):
@@ -180,7 +181,7 @@ def lista_subcategoria(request):
                 messages.error(request, 'Usuário não logado')
                 return redirect('login')
 
-        subcategorias = Subcategoria.objects.all()
+        subcategorias = Subcategoria.objects.all().order_by('nome')
         return render(request, 'produto/subcategoria.html',{"subcategorias":subcategorias})
 
 
@@ -257,3 +258,53 @@ def excluir_subcategoria(request, subcategoria_id):
             return redirect('subcategoria')  
         
     return render(request, 'produto/excluir_subcategoria.html', {'subcategoria': subcategoria})
+
+
+def importar_preco(request):
+    if request.method == 'POST' and request.FILES.get('arquivo_excel'):
+        arquivo_excel = request.FILES['arquivo_excel']
+
+        # Verifica a extensão do arquivo
+        if not arquivo_excel.name.endswith('.xlsx'):
+            messages.error(request, 'O arquivo deve estar em formato Excel (.xlsx)')
+            return redirect('produto')
+
+        # Carrega o arquivo Excel em um DataFrame pandas
+        try:
+            df = pd.read_excel(arquivo_excel)
+        except Exception as e:
+            messages.error(request, f'Erro ao ler o arquivo Excel: {str(e)}')
+            return redirect('produto')
+
+        # Itera sobre as linhas do DataFrame e cria/atualiza objetos Produto
+        for index, row in df.iterrows():
+            codigo = row.get('CODIGO PRODUTO')
+            descricao = row.get('DESCRICAO')
+            unidade = row.get('UNIDADE')
+            valor = row.get('VALOR')
+            valor_com_ipi = row.get('VALOR+IPI')
+
+            # Verifica se todas as colunas necessárias estão presentes no DataFrame
+            if not all([codigo, descricao, unidade, valor, valor_com_ipi]):
+                messages.warning(request, f'Erro na linha {index + 2}: Dados incompletos')
+                continue
+
+            # Verifica se o produto já existe pelo código
+            try:
+                produto = Produto.objects.get(codigo=codigo)
+                produto.nome = descricao
+                produto.preco = valor
+                produto.preco_com_ipi = valor_com_ipi
+                produto.unidade = unidade
+                produto.save()
+                
+            except Produto.DoesNotExist:
+                Produto.objects.create(codigo=codigo, nome=descricao, preco=valor, preco_com_ipi=valor_com_ipi, unidade=unidade)
+                
+
+        messages.success(request, 'Dados importados com sucesso!')
+        return redirect('produto')  # Redirecionar para a página desejada após a importação
+    else:
+        messages.error(request, 'Selecione o arquivo para importar')  # Mensagem de erro se o arquivo não for enviado
+        form = UploadExcelForm()
+        return render(request, 'produto/importar_preco.html', {'form': form})  # Página HTML para exibir o formulário de importação

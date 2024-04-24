@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.ferramentas.models import Tensao_energia, Modelo_sala, Modelo_equipamento, Tipo_linha, Tipo_contencao, Tipo_gerenciamento
+from apps.ferramentas.models import Tensao_energia, Modelo_sala, Modelo_equipamento, Tipo_linha, Tipo_contencao, Tipo_gerenciamento, ArquivoExcel
 
 class Tensao_energiaForms(forms.ModelForm):
         class Meta:
@@ -86,3 +86,8 @@ class Tipo_gerenciamentoForms(forms.ModelForm):
         widgets = {
          'tipo_gerenciamento_nome': forms.TextInput(attrs={'class':'form-control'}),   
         }
+
+class UploadExcelForm(forms.ModelForm):
+    class Meta:
+        model = ArquivoExcel
+        fields = ['arquivo']

@@ -18,7 +18,7 @@
                         </thead>
                         <tbody>
                             {% for modelo_sala in modelo_salas %}
-                            <tr>
+                            <tr class="table_item">
                                 <td>{{ modelo_sala.modelo_sala_nome }}</td>
                                 <td><a href="{% url 'editar_sala' modelo_sala.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>
                                     <a href="{% url 'excluir_sala' modelo_sala.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>

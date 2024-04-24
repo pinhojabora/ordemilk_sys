@@ -1,0 +1,14 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+<div class="centro">
+    <h1 class="form_padrao_titulo">Importar Dados</h1>
+    <div class="form_padrao_item">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="arquivo_excel" accept=".xlsx">
+            <button type="submit" class="btn_padrao">Importar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

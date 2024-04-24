@@ -35,3 +35,6 @@ class Tipo_gerenciamento(models.Model):
 
     def __str__(self):
         return self.tipo_gerenciamento_nome
+    
+class ArquivoExcel(models.Model):
+    arquivo = models.FileField(upload_to='uploads/excel/')

@@ -8,7 +8,7 @@
             <div class="submenu">
                 <div class="submenu_item">
                     <form method="GET">
-                         <label for="categoria" class="label-lista"><strong></strong></label>
+                         <label for="categoria" class="label-lista"></label>
                             <select name="categoria" id="categoria" class="label-lista">
                                 <option value="">Todas</option>
                                 {% for categoria in categorias %}
@@ -32,7 +32,7 @@
                     <tr class="table_cabecalho">
                         <th>Código</th>
                         <th>Produto</th>
-                        <th>Unidade</th>
+                        <th>Un</th>
                         <th colspan="3"></th>
                         
                     </tr>
@@ -43,7 +43,7 @@
                         <td colspan="6" class="table_subcategoria"><p>{{ subcategoria.nome }}</p></td>
                     </tr>
                     {% for produto in produtos %}
-                    <tr class="tabela-item">
+                    <tr class="table_item">
                         <td>{{ produto.codigo }}</td>
                         <td>{{ produto.nome }}</td>
                         <td>{{ produto.unidade }}</td>
