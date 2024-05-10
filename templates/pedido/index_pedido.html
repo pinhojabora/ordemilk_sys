@@ -41,7 +41,10 @@
                                     <td>{{ pedido.valor_total }}</td>
                                     <td class="table_item_quantidade"><a href="{% url 'detalhes_pedido' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/detalhes.png' %}" title="Mais detalhes"/></a>
                                         <a href="{% url 'editar_pedido' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>
-                                        <a href="{% url 'excluir_pedido' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>
+                                        <a href="{% url 'excluir_pedido' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a>
+                                        <a href="{% url 'romaneio_pedido' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/documento.png' %}" title="Romaneio"/></a>
+                                        <a href="{% url 'imprimir_romaneio_pdf' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/imprimir.png' %}" title="PDF Romaneio"/></a>
+                                        <a href="{% url 'imprimir_pedido_pdf' pedido.id %}"><img class="table_icone" src="{% static 'Assets/icones/imprimir.png' %}" title="PDF Pedido"/></a></td>
                                     
                                                     
                                 </tr>

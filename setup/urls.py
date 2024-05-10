@@ -16,6 +16,7 @@ urlpatterns = [
         path('', include('apps.ferramentas.urls')),
         path('', include('apps.carrinho.urls')),
         path('', include('apps.dashboard.urls')),
+        path('', include('apps.pipeline.urls')),
         
         
 ]

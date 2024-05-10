@@ -9,7 +9,8 @@ from apps.ferramentas.models import Tipo_contencao
 from apps.orcamento.models import Orcamento, Item_orcamento
 from apps.dashboard.models import Estatistica_user, Estatistica_geral
 from apps.orcamento.views import lista_orcamento
-
+from apps.dashboard.models import Estatistica_user
+from datetime import datetime, timedelta
 from django.http import HttpResponse
 
 from decimal import Decimal
@@ -478,7 +479,14 @@ def adicionar_nobreak(request):
     return render(request, 'seu_template.html', {'form': form})
 
 
-
+def calcular_efetivacao(orcamento, pedido):
+    orcamento_decimal = Decimal(orcamento)
+    pedido_decimal = Decimal(pedido)
+    
+    if orcamento_decimal == Decimal(0):
+        return Decimal(0)
+    
+    return ((pedido_decimal - orcamento_decimal) / orcamento_decimal) * Decimal(100)
 
 def converter_configuracao_orcamento(request, configurador_id):
     if not request.user.is_authenticated:
@@ -502,6 +510,9 @@ def converter_configuracao_orcamento(request, configurador_id):
             email=configurador.email,
             observacao=configurador.observacao,
             usuario=configurador.usuario,
+            vencimento_orcamento = configurador.data_configuracao + timedelta(days=30),
+            dias_faltantes = '30',
+            valor_total = configurador.valor_total
         )
         
         # Copiar itens do orçamento para o pedido
@@ -512,7 +523,20 @@ def converter_configuracao_orcamento(request, configurador_id):
                 quantidade=item_configurador.quantidade,
                 valor_unitario=item_configurador.valor_unitario,
                 valor_total=item_configurador.valor_total,
+                
             )
+
+        # Atualizar as estatísticas do usuário
+        estatistica_user = Estatistica_user.objects.get_or_create(user=request.user)[0]
+        estatistica_user.orcamento += 1
+        estatistica_user.efetivacao = calcular_efetivacao(estatistica_user.orcamento, estatistica_user.pedido)
+        estatistica_user.save()
+
+        # Atualizar as estatísticas gerais
+        estatistica_geral = Estatistica_geral.objects.first()
+        estatistica_geral.orcamento += 1
+        estatistica_geral.efetivacao = calcular_efetivacao(estatistica_geral.orcamento, estatistica_geral.pedido)
+        estatistica_geral.save()
         
         # Exibir mensagem de sucesso
         messages.success(request, 'Configuração convertida em orçamento com sucesso!')

@@ -15,6 +15,9 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.db.models import F
 from django.db.models.functions import Cast
+from xhtml2pdf import pisa
+from django.template.loader import render_to_string
+from io import BytesIO
 
 def lista_orcamento(request):
     if not request.user.is_authenticated:
@@ -338,8 +341,10 @@ def converter_orcamento_pedido(request, orcamento_id):
             parcelas=orcamento.parcelas,
             observacao=orcamento.observacao,
             usuario=orcamento.usuario,
+            
         )
         
+
         # Copiar itens do orçamento para o pedido
         for item_orcamento in orcamento.item_orcamento_set.all():
             Item_pedido.objects.create(
@@ -349,6 +354,8 @@ def converter_orcamento_pedido(request, orcamento_id):
                 valor_unitario=item_orcamento.valor_unitario,
                 valor_total=item_orcamento.valor_total,
             )
+        
+            
         
         # Exibir mensagem de sucesso
         messages.success(request, 'Orçamento convertido em pedido com sucesso!')
@@ -421,3 +428,35 @@ def carrinho_vazio(request):
                 return redirect('login')
 
         return render(request, 'carrinho/carrinho_vazio.html')
+
+
+
+def imprimir_orcamento_pdf(request, orcamento_id):
+    orcamento_detalhado = get_object_or_404(Orcamento, pk=orcamento_id)
+    itens_orcamento = Item_orcamento.objects.filter(orcamento=orcamento_detalhado)
+    parcelas_orcamento = Parcela_orcamento.objects.filter(orcamento=orcamento_detalhado)
+
+    context = {
+        'orcamento_detalhado': orcamento_detalhado,
+        'itens_orcamento': itens_orcamento,
+        'parcelas_orcamento': parcelas_orcamento,
+
+    }
+
+    # Renderizar o template HTML em uma string
+    html_string = render_to_string('orcamento/impressao_orcamento.html', context)
+
+    # Criar um arquivo BytesIO para armazenar o PDF
+    pdf_file = BytesIO()
+
+    # Criar o PDF usando xhtml2pdf
+    pisa.CreatePDF(BytesIO(html_string.encode("UTF-8")), dest=pdf_file)
+
+    # Configurar o cursor do BytesIO para o início antes de enviar o conteúdo
+    pdf_file.seek(0)
+
+    # Configurar a resposta HTTP com o conteúdo PDF
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="impressao_orcamento.pdf"'
+
+    return response

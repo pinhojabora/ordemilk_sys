@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Orçamento</title>
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="cabecalho2">
+            <div class="logo_container2">
+            <img class="logo_relatorio" src="{% static 'Assets/imagens/om_sem_fundo.png' %}" alt="Logo da Ordemilk">
+            </div>
+        </div>       
+         <h1 class="titulo_relatorio">Orçamento</h1>   
+            
+        
+
+    </header>
+    
+        
+    </div>
+        <table>
+            <tr>
+                <td colspan="2"><strong>Cliente:</strong> {{ orcamento_detalhado.nome_cliente }}</td>
+                <td><strong>Data do orçamento:</strong> {{ orcamento_detalhado.data_orcamento }}</td>
+            </tr>
+            <tr>
+                <td colspan="3"><strong>Endereço do cliente:</strong> {{ orcamento_detalhado.endereco_cliente }}</td>
+            </tr>
+            <tr>
+                <td><strong>Cidade:</strong> {{ orcamento_detalhado.cidade }}</td>
+                <td><strong>Estado:</strong> {{ orcamento_detalhado.estado }}</p></td>
+                <td><strong>CEP:</strong> {{ orcamento_cep }}</td>
+            </tr>
+            <tr>
+                <td><strong>Fone:</strong> {{ orcamento_detalhado.fone }}</td>
+                <td colspan="2"><strong>E-mail:</strong> {{ orcamento_detalhado.email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Forma de pagamento:</strong> {{ orcamento_detalhado.forma_pagamento }}</td>
+                <td><strong>Pagamento:</strong> {{ orcamento_detalhado.pagamento }}</td>
+                <td><strong>Parcelas:</strong> {{ orcamento_detalhado.parcelas }}</td>
+            </tr>
+            <tr>
+                <td><strong>Valor total:</strong> R$ {{ orcamento_detalhado.valor_total }}</td>
+                <td><strong>Entrada:</strong> R$ {{ orcamento_detalhado.entrada }}</td>
+                <td><strong>Saldo:</strong> R$ {{ orcamento_detalhado.saldo }}</td>
+            </tr>
+        </table>
+        <h3 class="table_item">Parcelas</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th class="table_item">Data</th>
+                    <th class="table_item">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+             {% for parcela in parcelas_orcamento %}
+                <tr>
+                    <td class="table_item">R$ {{ parcela.data_parcela }}</td>
+                    <td class="table_item">R$ {{ parcela.valor_parcela }}</td>
+                </tr>
+                    
+                {% endfor %}
+            </tbody>
+        </table>        
+
+        
+          
+        <table class="table">
+            <thead>
+                <tr class="table_cabecalho">
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Valor Unitário</th>
+                    <th>Valor Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in itens_orcamento %}
+                    <tr></tr>
+                    <tr>
+                        <td class="table_item">{{ item.produto.nome }}</td>
+                        <td class="table_item_quantidade">{{ item.quantidade }}</td>
+                        <td class="table_item_valor">R$ {{ item.valor_unitario }}</td>
+                        <td class="table_item_valor">R$ {{ item.valor_total }}</td>
+                    </tr>
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </br>
+    </br>
+    </br>
+    <table>
+        <thead>
+            
+            <tr>
+                <th class="table_item">_________________________</th>
+                <th></th>
+                <th class="table_item">_________________________</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                <tr>
+                    <td class="table_item">Vendedor OM</td>
+                    <td></td>
+                    <td class="table_item">{{ orcamento_detalhado.nome_cliente }}</td>
+                </tr>
+                <tr>
+                    <td class="table_item">{{ orcamento_detalhado.usuario.get_full_name }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                
+            
+        </tbody>
+    </table>
+    </div>
+    
+</body>
+</html>

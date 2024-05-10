@@ -47,6 +47,13 @@ body {
    
 }
 
+.logo_relatorio {
+  width: 30px;
+  height: 30px;
+  margin:left;
+ 
+}
+
 .titulo{
   color:#f6f6f6;
   padding: 1px;

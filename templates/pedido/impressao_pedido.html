@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedido</title>
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="cabecalho2">
+            <div class="logo_container2">
+            <img class="logo_relatorio" src="{% static 'Assets/imagens/om_sem_fundo.png' %}" alt="Logo da Ordemilk">
+            </div>
+        </div>       
+         <h1 class="titulo_relatorio">Pedido</h1>   
+            
+        
+
+    </header>
+    
+        
+    </div>
+    <table>
+        <tr>
+            <td colspan="2"><strong>Cliente:</strong> {{ pedido_detalhado.nome_cliente }}</td>
+            <td><strong>Data do pedido:</strong> {{ pedido_detalhado.data_pedido }}</td>
+        </tr>
+        <tr>
+            <td colspan="3"><strong>Endereço do cliente:</strong> {{ pedido_detalhado.endereco_cliente }}</td>
+        </tr>
+        <tr>
+            <td><strong>Cidade:</strong> {{ pedido_detalhado.cidade }}</td>
+            <td><strong>Estado:</strong> {{ pedido_detalhado.estado }}</p></td>
+            <td><strong>CEP:</strong> {{ pedido_cep }}</td>
+        </tr>
+        <tr>
+            <td><strong>Fone:</strong> {{ pedido_detalhado.fone }}</td>
+            <td colspan="2"><strong>E-mail:</strong> {{ pedido_detalhado.email }}</td>
+        </tr>
+        <tr>
+            <td><strong>Forma de pagamento:</strong> {{ pedido_detalhado.forma_pagamento }}</td>
+            <td><strong>Pagamento:</strong> {{ pedido_detalhado.pagamento }}</td>
+            <td><strong>Parcelas:</strong> {{ pedido_detalhado.parcelas }}</td>
+        </tr>
+        <tr>
+            <td><strong>Valor total:</strong> R$ {{ pedido_detalhado.valor_total }}</td>
+            <td><strong>Entrada:</strong> R$ {{ pedido_detalhado.entrada }}</td>
+            <td><strong>Saldo:</strong> R$ {{ pedido_detalhado.saldo }}</td>
+        </tr>
+        <tr>
+            <td colspan="3"><strong>Observações:</strong> {{ pedido_detalhado.observacao }}</td>
+        </tr>
+    </table>
+        
+          
+        <table class="table">
+            <thead>
+                <tr class="table_cabecalho">
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Valor Unitario</th>
+                    <th>Valor Total</th>
+                </tr>
+                <tr></tr>
+            </thead>
+            <tbody>
+                {% for item in itens_pedido %}
+                    <tr>
+                        <td class="table_item">{{ item.produto.nome }}</td>
+                        <td class="table_item_quantidade">{{ item.quantidade }}</td>
+                        <td class="table_item_valor">R$ {{ item.valor_unitario }}</td>
+                        <td class="table_item_valor">R$ {{ item.valor_total }}</td>
+                    </tr>
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </br>
+    <table>
+        <thead>
+            <tr></tr>
+            <tr>
+                <th class="table_item">_________________________</th>
+                <th></th>
+                <th class="table_item">_________________________</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                <tr>
+                    <td class="table_item">Vendedor OM</td>
+                    <td></td>
+                    <td class="table_item">{{ pedido_detalhado.nome_cliente }}</td>
+                </tr>
+                <tr>
+                    <td class="table_item">{{ pedido_detalhado.usuario.get_full_name }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                
+            
+        </tbody>
+    </table>
+    </div>
+    
+</body>
+</html>

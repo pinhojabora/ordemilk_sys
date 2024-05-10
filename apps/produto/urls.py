@@ -14,6 +14,9 @@ from apps.produto.views import(
                                 editar_subcategoria,
                                 excluir_subcategoria,
                                 importar_preco,
+                                importar_componentes,
+                                importar_componentes2
+                                
 )
  
 urlpatterns = [
@@ -32,4 +35,6 @@ urlpatterns = [
         path('editar_subcategoria/<int:subcategoria_id>/', editar_subcategoria, name='editar_subcategoria'),
         path('excluir_subcategoria/<int:subcategoria_id>/', excluir_subcategoria, name='excluir_subcategoria'),
         path('importar_preco/', importar_preco, name='importar_preco'),
+        path('importar_componentes/', importar_componentes, name='importar_componentes'),
+        path('importar_componentes2/', importar_componentes2, name='importar_componentes2'),
 ]

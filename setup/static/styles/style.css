@@ -440,7 +440,7 @@ footer {
 }
 
 .label-lista{
-  font-size: large;
+  font-size: small;
 }
 
 .orcamento1{
@@ -524,6 +524,14 @@ tr:nth-child(even) {
   text-transform: capitalize;
 }
 
+.table_cabecalho2{
+  font-size:medium;
+  background-color: #000000;
+  color: #f6f6f6;
+  text-transform: capitalize;
+}
+
+
 .table_item{
   font-size:85%;
   color: #000000;
@@ -531,6 +539,35 @@ tr:nth-child(even) {
   padding-left: 1%;
 }
 
+.table_item_produto{
+  font-size:85%;
+  color: #000000;
+  text-align: left;
+  padding-left: 0%;
+  background-color: #f6f6f6;
+  margin-left: 0%;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.table_item_producao1{
+  font-size:85%;
+  color: #000000;
+  text-align: left;
+  padding-left: 1%;
+  margin-left: 1%;
+  text-transform: uppercase;
+}
+
+.table_item_producao2{
+  font-size:85%;
+  color: #000000;
+  text-align: left;
+  padding-left: 2%;
+  margin-left: 2%;
+  background-color: #f6f6f6;
+  text-transform: uppercase;
+}
 
 .table_item_valor{
   font-size:small;
@@ -572,7 +609,7 @@ tr:nth-child(even) {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content:flex-start;
-  width: auto;
+  width:90%;
   /*align-content: flex-start;*/
 }
 
@@ -586,6 +623,7 @@ tr:nth-child(even) {
   width: 300px;
   justify-content: flex-start;
   height: fit-content;
+  
 }
 
 .form_padrao_titulo {
@@ -748,4 +786,98 @@ width: 50%;
   width: 35px;
   height: 35px;
   margin: auto;
+}
+
+/* ######### RELATORIOS ############ */
+
+.quantity-column {
+  width: 110px; /* Definir a largura desejada para a coluna de quantidade */
+  background-color: red;
+  color: #f6f6f6;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+.cabecalho2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  width: 100%;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  background-color:transparent;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  
+}
+.logo_container2{
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 100%;
+  background-color: transparent;
+}
+
+.logo_relatorio {
+  width: 70px;
+  height: 50px;
+  margin:left;
+}
+
+.titulo_relatorio{
+  color: #f6f6f6;
+  background-color: #000000;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.tab_cabecalho{
+  background-color: red;
+  color: #f6f6f6;
+  text-align: center;
+  padding: 2px;
+  font-family: Arial, sans-serif;
+}
+
+.produto_relatorio{
+  font-weight: 200;
+  padding: 2px;
+  background-color: #000000;
+  color: #f6f6f6;
+  font-family: Arial, sans-serif;
+}
+.item_relatorio{
+  font-family: Arial, sans-serif;
+  padding: 2px;
+  color: #000000;
+}
+
+
+/* ########### Quadro Pipeline ###############*/
+
+.quadro{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.quadro_coluna{
+  padding: 4px;
+  background-color: #e4dddd;
+  border: solid #f6f6f6;
+  width: 12%;
+  flex-wrap: wrap;
+}
+
+.quadro_card{
+  background-color: #f6f6f6;
+  border-radius: 5%;
+  margin: 2px;
+}
+
+.quadro_card_titulo{
+  font-size: medium;
+  font-weight: 400;
 }

@@ -1,0 +1,39 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+
+            <div class="centro">
+                
+                <h1>{{ pipeline.titulo }}</h1>
+                <p><strong>Formulário inicial</strong></p>
+                <p>Criador por {{ pipeline.usuario }} em {{ pipeline.data_inclusao }}</p></br>
+                <p><strong>Cliente</strong></p>
+                <p>{{ pipeline.cliente }}</p></br>
+                <p><strong>Contato</strong></p>
+                <p>{{ pipeline.pessoa_contato }}</p></br>
+                <p><strong>Telefone</strong></p>
+                <p>{{ pipeline.telefone }}</p></br>
+                <p><strong>E-mail</strong></p>
+                <p></p>{{ pipeline.email }}</p></br>
+                <p><strong>Cidade</strong></p>
+                <p>Residente em {{ pipeline.cidade }}  - {{ pipeline.estado }}</p></br>
+                <p><strong>Setor ou Atividade</strong></p>
+                <p>{{ pipeline.setor_atividade }}</p></br>
+                <p><strong>Fonte da Lead</strong></p>
+                <p>{{ pipeline.fonte_lead }}</p></br>
+                <p><strong>Detalhes da Oportunidade</strong></p>
+                <p></p>{{ pipeline.detalhes_oportunidade }}</p></br>
+                </br>
+                <p><strong>Fase atual</strong></p>
+                <p>{{ pipeline.fase }}</p>
+                       
+                        
+                        
+                        
+            </div>
+    </div>
+       
+</div>
+   
+ {% endblock %}

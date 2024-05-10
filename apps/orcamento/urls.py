@@ -15,7 +15,8 @@ from apps.orcamento.views import (
     excluir_orcamento,
     importar_produtos,
     buscar_orcamento,
-    carrinho_vazio
+    carrinho_vazio,
+    imprimir_orcamento_pdf
     )
 
 urlpatterns = [
@@ -35,4 +36,5 @@ urlpatterns = [
         path('importar_produtos/<int:orcamento_id>/', importar_produtos, name='importar_produtos'),
         path("buscar_orcamento", buscar_orcamento, name="buscar_orcamento"),
         path('carrinho_vazio', carrinho_vazio, name='carrinho_vazio'),
+        path('imprimir_orcamento/<int:orcamento_id>/pdf/', imprimir_orcamento_pdf, name='imprimir_orcamento_pdf'),
 ]

@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.produto.models import Produto, Categoria, Subcategoria
+from apps.produto.models import Produto, Categoria, Subcategoria, Producao1
 
 class ProdutoForms(forms.ModelForm):
         class Meta:
@@ -63,3 +63,23 @@ class SubcategoriaForms(forms.ModelForm):
         widgets = {
          'nome': forms.TextInput(attrs={}),
          }
+
+
+class ProducaoForms(forms.ModelForm):
+        class Meta:
+                model = Producao1
+                fields = '__all__'
+                labels = {
+            'codigo':'Código',
+            'nome':'Produto',
+            'quantidade':'Quantidade',
+            
+        }
+
+
+        widgets = {
+         'codigo': forms.TextInput(attrs={}),
+         'nome': forms.TextInput(attrs={'class':'form-control'}),   
+         'quantidade': forms.TextInput(attrs={'class':'form-control'}),
+         
+        }

@@ -26,7 +26,7 @@ class Subcategoria(models.Model):
 
              
 class Produto(models.Model):
-    nome = models.CharField(max_length=100, null=False, blank=False)
+    nome = models.TextField(max_length=100, null=False, blank=False)
     codigo = models.CharField(max_length=100, null=False, blank=False, default='')
     unidade = models.CharField(max_length=4, null=False, blank=False, default='')
     descricao = models.TextField(null=False, blank=False)
@@ -46,8 +46,35 @@ class Produto(models.Model):
     extracao = models.BooleanField(default=False)
     conj_ordenha = models.BooleanField(default=False)
     nobreak = models.BooleanField(default=False)
+    maximo_vacuo = models.IntegerField(null=True, blank=True, default=0)
+    
+    def __str__(self):
+        return self.nome
+    
+    class Meta:
+        ordering = ['nome']
+
+
+class Producao1(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE, null=2, blank=False, related_name='producao1s')
+    codigo = models.CharField(max_length=100, null=False, blank=False, default='')
+    nome = models.TextField(max_length=100, null=True, blank=True)
+    quantidade = models.DecimalField(max_digits=30, decimal_places=5, null=True, blank=True, default=0)
 
     def __str__(self):
         return self.nome
     
+    class Meta:
+        ordering = ['nome']
 
+class Producao2(models.Model):
+    producao1 = models.ForeignKey(Producao1, on_delete=models.CASCADE, null=False, blank=False, related_name='producao2s')
+    codigo = models.CharField(max_length=100, null=True, blank=True, default='')
+    nome = models.TextField(max_length=100, null=True, blank=True)
+    quantidade = models.DecimalField(max_digits=30, decimal_places=5, null=True, blank=True, default=0)
+
+    def __str__(self):
+        return self.nome
+    
+    class Meta:
+        ordering = ['nome'] 

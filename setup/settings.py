@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'apps.ferramentas.apps.FerramentasConfig',
     'apps.carrinho.apps.CarrinhoConfig',
     'apps.dashboard.apps.DashboardConfig',
+    'apps.pipeline.apps.PipelineConfig',
 
     'storages',
 ]
@@ -127,6 +128,9 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 
 USE_TZ = True
+
+THOUSAND_SEPARATOR='.',
+USE_THOUSAND_SEPARATOR=True
 
 
 # AWS Configuração
@@ -205,3 +209,5 @@ MESSAGE_TAGS = {
 }
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000

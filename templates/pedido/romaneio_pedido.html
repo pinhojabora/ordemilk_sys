@@ -1,0 +1,69 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="centro">
+    <h1 class="titulo_padrao">Romaneio do Pedido</h1>
+    <div>
+        <table class="table">
+            <thead>
+                <tr class="table_cabecalho">
+                    <th>Data Pedido</th>
+                    <th>Cliente</th>
+                    <th>Endereço</th>
+                    <th>Cidade</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table_item">
+                    <td>{{ pedido.data_pedido }}</td>
+                    <td>{{ pedido.nome_cliente }}</td>
+                    <td>{{ pedido.endereco_cliente }}</td>
+                    <td>{{ pedido.cidade }}</td>
+                    <td>{{ pedido.estado }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    
+    <h2 class="titulo_padrao">Itens do Pedido</h2>
+                   
+    <div>
+        <table class="table">
+            <thead>
+                <tr class="table_cabecalho">
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in itens_pedido %}
+                <tr class="table_item_produto">
+                    <td class="table_item_produto">{{ item.produto.nome }}</td>
+                    <td class="table_item_produto">{{ item.quantidade }}</td>
+                </tr>
+                {% for producao1 in producao1s %}
+                {% if producao1.produto == item.produto %}
+                <tr class="table_item_producao1">
+                    <td class="table_item_producao1">{{ producao1.nome }}</td>
+                    <td class="table_item_producao1">{{ producao1.quantidade }}</td>
+                </tr>
+                {% for producao2 in producao2s %}
+                {% if producao2.producao1 == producao1 %}
+                <tr class="table_item_producao2">
+                    <td class="table_item_producao2">{{ producao2.nome }}</td>
+                    <td class="table_item_producao2">{{ producao2.quantidade }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

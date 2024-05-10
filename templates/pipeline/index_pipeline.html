@@ -1,0 +1,40 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="centro">
+    <div class="submenu_item">
+        <a href="{% url 'cadastro_prospecto'%}">
+            <img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Cadastrar Pedido"/>
+        </a>
+    </div>
+
+    <div class="quadro">
+        {% for fase in fases %}
+        <div class="quadro_coluna">
+            <h3>{{ fase.nome_fase }}</h3>
+            <div>
+                {% for pipeline in pipelines %}
+                {% if pipeline.fase == fase %}
+                <div class="quadro_card">
+                    <p>{{ pipeline.situacao }}</p>
+                    <p class="quadro_card_titulo">{{ pipeline.titulo }}</p>
+                    <p>Cliente:</p>
+                    <p>{{ pipeline.cliente }}</p>
+                    <p>{{ pipeline.data_inclusao  }}</p>
+                    <div>
+                        <a href="{% url 'detalhes_prospecto' pipeline.id %}">
+                            <img class="table_icone" src="{% static 'Assets/icones/detalhes.png' %}" title="Mais detalhes"/>
+                        </a>
+                    </div>
+                    <!-- Adicione mais informações dos cards aqui conforme necessário -->
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

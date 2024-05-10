@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from apps.produto.forms import ProdutoForms, CategoriaForms, SubcategoriaForms
+from apps.produto.forms import ProdutoForms, CategoriaForms, SubcategoriaForms, ProducaoForms
 
 from django.contrib import messages
-from apps.produto.models import Produto, Categoria, Subcategoria
+from apps.produto.models import Produto, Categoria, Subcategoria, Producao1, Producao2
 from django.http import HttpResponse
 from django.db.models import Q
 import pandas as pd
@@ -65,7 +65,11 @@ def detalhes_produto(request, produto_id):
                 return redirect('login')
     produto_detalhado = Produto.objects.get(pk=produto_id)
     fotografias = produto_detalhado.fotografias.all()  # Acessando todas as fotografias associadas ao produto
-    return render(request, 'produto/detalhes_produto.html', {'produto': produto_detalhado, 'fotografias': fotografias})
+    producao1s = produto_detalhado.producao1s.all()
+    producao2s = []
+    for producao1 in producao1s:
+        producao2s.extend(producao1.producao2s.all())
+    return render(request, 'produto/detalhes_produto.html', {'produto': produto_detalhado, 'fotografias': fotografias,'producao1s':producao1s, 'producao2s':producao2s})
 
 
 def buscar(request):
@@ -308,3 +312,111 @@ def importar_preco(request):
         messages.error(request, 'Selecione o arquivo para importar')  # Mensagem de erro se o arquivo não for enviado
         form = UploadExcelForm()
         return render(request, 'produto/importar_preco.html', {'form': form})  # Página HTML para exibir o formulário de importação
+    
+
+def importar_componentes(request):
+    if request.method == 'POST' and request.FILES.get('arquivo_excel'):
+        arquivo_excel = request.FILES['arquivo_excel']
+
+        # Verifica a extensão do arquivo
+        if not arquivo_excel.name.endswith('.xlsx'):
+            messages.error(request, 'O arquivo deve estar em formato Excel (.xlsx)')
+            return redirect('produto')
+
+        # Carrega o arquivo Excel em um DataFrame pandas
+        try:
+            df = pd.read_excel(arquivo_excel)
+        except Exception as e:
+            messages.error(request, f'Erro ao ler o arquivo Excel: {str(e)}')
+            return redirect('produto')
+
+        # Itera sobre as linhas do DataFrame e cria/atualiza objetos Producao1
+        for index, row in df.iterrows():
+            codigo_produto = row.get('produto')
+            quantidade = row.get('quantidade')
+            nome = row.get('nome')
+            codigo = row.get('codigo')
+
+            # Verifica se todas as colunas necessárias estão presentes no DataFrame
+            if not all([codigo_produto, quantidade, nome]):
+                messages.warning(request, f'Erro na linha {index + 2}: Dados incompletos')
+                continue
+
+            # Tenta encontrar o produto no banco de dados
+            try:
+                produto = Produto.objects.get(codigo=codigo_produto)
+            except Produto.DoesNotExist:
+                continue  # Ignora a linha se o produto não existir
+
+            # Cria a relação entre o produto e a producao1
+            try:
+                Producao1.objects.create(
+                    produto=produto,
+                    codigo=codigo,
+                    nome=nome,  # Preenche com o nome do produto
+                    quantidade=quantidade
+                )
+            except Exception as e:
+                messages.error(request, f'Erro na linha {index + 2}: {str(e)}')
+                continue
+
+        messages.success(request, 'Componentes importados com sucesso!')
+        return redirect('produto')  # Redirecionar para a página desejada após a importação
+    else:
+        messages.error(request, 'Selecione o arquivo para importar')  # Mensagem de erro se o arquivo não for enviado
+        form = UploadExcelForm()
+        return render(request, 'produto/importar_componentes.html', {'form': form})  # Página HTML para exibir o formulário de importação
+
+def importar_componentes2(request):
+    if request.method == 'POST' and request.FILES.get('arquivo_excel'):
+        arquivo_excel = request.FILES['arquivo_excel']
+
+        # Verifica a extensão do arquivo
+        if not arquivo_excel.name.endswith('.xlsx'):
+            messages.error(request, 'O arquivo deve estar em formato Excel (.xlsx)')
+            return redirect('produto')
+
+        # Carrega o arquivo Excel em um DataFrame pandas
+        try:
+            df = pd.read_excel(arquivo_excel)
+        except Exception as e:
+            messages.error(request, f'Erro ao ler o arquivo Excel: {str(e)}')
+            return redirect('produto')
+
+        # Itera sobre as linhas do DataFrame e cria/atualiza objetos Producao1
+        for index, row in df.iterrows():
+            codigo_produto = row.get('produto')
+            quantidade = row.get('quantidade')
+            nome = row.get('nome')
+            codigo = row.get('codigo')
+
+            # Verifica se todas as colunas necessárias estão presentes no DataFrame
+            if not all([codigo_produto, quantidade, nome]):
+                messages.warning(request, f'Erro na linha {index + 2}: Dados incompletos')
+                continue
+
+            # Tenta encontrar o produto no banco de dados
+            try:
+                produto = Producao1.objects.get(codigo=codigo_produto)
+            except Producao1.DoesNotExist:
+                continue  # Ignora a linha se o produto não existir
+
+            # Cria a relação entre o produto e a producao1
+            try:
+                Producao2.objects.create(
+                    produto=produto,
+                    codigo=codigo,
+                    nome=nome,  # Preenche com o nome do produto
+                    quantidade=quantidade
+                )
+            except Exception as e:
+                messages.error(request, f'Erro na linha {index + 2}: {str(e)}')
+                continue
+
+        messages.success(request, 'Componentes importados com sucesso!')
+        return redirect('produto')  # Redirecionar para a página desejada após a importação
+    else:
+        messages.error(request, 'Selecione o arquivo para importar')  # Mensagem de erro se o arquivo não for enviado
+        form = UploadExcelForm()
+        return render(request, 'produto/importar_componentes2.html', {'form': form})  # Página HTML para exibir o formulário de importação
+

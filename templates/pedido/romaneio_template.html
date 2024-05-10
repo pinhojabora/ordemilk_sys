@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Romaneio de Pedido</title>
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="cabecalho2">
+            <div class="logo_container2">
+            <img class="logo_relatorio" src="{% static 'Assets/imagens/om_sem_fundo.png' %}" alt="Logo da Ordemilk">
+            </div>
+        </div>       
+         <h1 class="titulo_relatorio">Romaneio Pedido</h1>   
+            
+        
+
+    </header>
+    
+        
+    </div>
+        <p><strong>Cliente:</strong> {{ pedido_detalhado.nome_cliente }}</p>
+        <p><strong>Data do pedido:</strong> {{ pedido_detalhado.data_pedido }}</p>
+        <p><strong>Endereço do cliente:</strong> {{ pedido_detalhado.endereco_cliente }}</p>
+        <p><strong>Cidade:</strong> {{ pedido_detalhado.cidade}}</p>
+        <p><strong>Estado:</strong> {{ pedido_detalhado.estado }}</p>
+        
+          
+        <table>
+            <thead>
+                <tr>
+                    <th class="tab_cabecalho">Produto</th>
+                    <th class="quantity-column">Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in itens_pedido %}
+                    <tr>
+                        <td class="produto_relatorio">{{ item.produto.nome }}</td>
+                        <td class="produto_relatorio">{{ item.quantidade }}</td>
+                    </tr>
+                    {% for producao1 in producao1s %}
+                        {% if producao1.produto == item.produto %}
+                            <tr class="table_item">
+                                <td class="item_relatorio">{{ producao1.nome }}</td>
+                                <td class="item_relatorio">{{ producao1.quantidade }}</td>
+                            </tr>
+                            {% for producao2 in producao2s %}
+                                {% if producao2.producao1 == producao1 %}
+                                    <tr>
+                                        <td>{{ producao2.nome }}</td>
+                                        <td>{{ producao2.quantidade }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+</html>

@@ -53,7 +53,37 @@
                                 {% endfor %}
                             </div>
                         </div>
-
+                        
+                <h2 class="titulo_padrao">Planilha do Produto</h2>        
+                        <div>
+                            <table class="table">
+                                <thead>
+                                    <tr class="table_cabecalho">
+                                        <th>Codigo</th>
+                                        <th>Nome</th>
+                                        <th>Quantidade</th>
+                                        <th></th>
+                                        
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for producao1 in producao1s %}
+                                    <tr>
+                                        <td class="table_item">{{ producao1.codigo }}</td>
+                                        <td class="table_item">{{ producao1.nome }}</td>
+                                        <td class="table_item_quantidade">{{ producao1.quantidade }}</td>
+                                        <td></td>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
             </div>
     </div>
        

@@ -39,7 +39,7 @@ class Orcamento(models.Model):
     parcelas = models.CharField(max_length=100, null=False, blank=False, default=0)
     observacao = models.TextField(null=False, blank=False)
     vencimento_orcamento = models.DateField(null=True, blank=True)
-    dias_faltantes = models.CharField(max_length=100, null=True, blank=True)
+    dias_faltantes = models.CharField(max_length=100, null=True, blank=True, default=0)
     usuario = models.ForeignKey(
         to=User,
         on_delete=models.SET_NULL,
