@@ -71,13 +71,18 @@ def dashboard_geral(request):
     return render(request, 'dashboard/dashboard_geral.html', context)
 
 
+@login_required
 def dashboard_vendedor(request):
     if not request.user.is_authenticated:
         messages.error(request, 'Usuário não logado')
         return redirect('login')
 
     # Obter dados das estatísticas do usuário atual
-    estatistica_user = Estatistica_user.objects.get(user=request.user)
+    try:
+        estatistica_user = Estatistica_user.objects.get(user=request.user)
+    except Estatistica_user.DoesNotExist:
+        messages.error(request, 'Estatísticas do usuário não disponíveis.')
+        return redirect('dashboard_usuario')
 
     # Obter dados das estatísticas gerais
     estatistica_geral = Estatistica_geral.objects.first()
@@ -94,25 +99,28 @@ def dashboard_vendedor(request):
     # Criar os subgráficos
     fig, axs = plt.subplots(1, 2, figsize=(12, 6))
 
+    # Nome completo do usuário
+    nome_completo = f"{request.user.first_name} {request.user.last_name}".strip() or request.user.username
+
     # Subgráfico para as estatísticas do usuário
-    bars_usuario = axs[0].bar(categorias, valores_usuario, label='Vendedor', color='black')
-    axs[0].set_title('Estatísticas do Vendedor')
+    bars_usuario = axs[0].bar(categorias, valores_usuario, label=nome_completo, color='black')
+    axs[0].set_title(f'Estatísticas de {nome_completo}')
     axs[0].set_ylabel('Valores')
 
     # Adicionar os valores sobre as barras no subgráfico do usuário
     for bar in bars_usuario:
         yval = bar.get_height()
-        axs[0].text(bar.get_x() + bar.get_width()/2, yval, round(yval, 2), va='bottom', ha='center')
+        axs[0].text(bar.get_x() + bar.get_width() / 2, yval, round(yval, 2), va='bottom', ha='center')
 
     # Subgráfico para a efetivação do usuário
-    bars_efetivacao_usuario = axs[1].bar(['Efetivação'], valores_efetivacao_usuario, label='Vendedor', color='black')
-    axs[1].set_title('Efetivação do Vendedor')
+    bars_efetivacao_usuario = axs[1].bar(['Efetivação'], valores_efetivacao_usuario, label=nome_completo, color='black')
+    axs[1].set_title(f'Efetivação de {nome_completo}')
     axs[1].set_ylabel('Valores')
 
     # Adicionar o valor sobre a barra no subgráfico de efetivação do usuário
     for bar in bars_efetivacao_usuario:
         yval = bar.get_height()
-        axs[1].text(bar.get_x() + bar.get_width()/2, yval, round(yval, 2), va='bottom', ha='center')
+        axs[1].text(bar.get_x() + bar.get_width() / 2, yval, round(yval, 2), va='bottom', ha='center')
 
     # Adicionar as barras das estatísticas gerais nos subgráficos
     bars_gerais = axs[0].bar(categorias, valores_gerais, alpha=0.5, label='Ordemilk', color='red')
@@ -155,7 +163,7 @@ def dashboard_gerente(request):
 
     # Criar os dados para os subgráficos dos vendedores
     categorias = ['Configuração', 'Orçamento', 'Pedido']
-    fig, axs = plt.subplots(len(vendedores) + 1, 2, figsize=(12, (len(vendedores) + 1)*4))
+    fig, axs = plt.subplots(len(vendedores) + 1, 2, figsize=(12, (len(vendedores) + 1) * 4))
 
     # Adicionar os dados do gerente
     try:
@@ -168,7 +176,7 @@ def dashboard_gerente(request):
 
         for bar in bars_geral:
             yval = bar.get_height()
-            axs[0, 0].text(bar.get_x() + bar.get_width()/2, yval, round(yval, 2), va='bottom', ha='center')
+            axs[0, 0].text(bar.get_x() + bar.get_width() / 2, yval, round(yval, 2), va='bottom', ha='center')
 
         # Subplot para a efetivação geral
         bars_efetivacao_geral = axs[0, 1].bar(['Efetivação'], [estatistica_geral.efetivacao], color='red')
@@ -177,7 +185,7 @@ def dashboard_gerente(request):
 
         for bar in bars_efetivacao_geral:
             yval = bar.get_height()
-            axs[0, 1].text(bar.get_x() + bar.get_width()/2, yval, round(yval, 2), va='bottom', ha='center')
+            axs[0, 1].text(bar.get_x() + bar.get_width() / 2, yval, round(yval, 2), va='bottom', ha='center')
 
     except Estatistica_geral.DoesNotExist:
         messages.warning(request, 'As estatísticas gerais não estão disponíveis.')
@@ -189,23 +197,25 @@ def dashboard_gerente(request):
                                 estatistica_vendedor.orcamento,
                                 estatistica_vendedor.pedido]
 
+            nome_completo = f"{vendedor.user.first_name} {vendedor.user.last_name}".strip() or vendedor.user.username
+
             # Subplot para as estatísticas do vendedor
-            bars_vendedor = axs[i, 0].bar(categorias, valores_vendedor, label=vendedor.user.username, color='black')
-            axs[i, 0].set_title(f'Estatísticas de {vendedor.user.username}')
+            bars_vendedor = axs[i, 0].bar(categorias, valores_vendedor, label=nome_completo, color='black')
+            axs[i, 0].set_title(f'Estatísticas de {nome_completo}')
             axs[i, 0].set_ylabel('Valores')
 
             for bar in bars_vendedor:
                 yval = bar.get_height()
-                axs[i, 0].text(bar.get_x() + bar.get_width()/2, yval, round(yval, 2), va='bottom', ha='center')
+                axs[i, 0].text(bar.get_x() + bar.get_width() / 2, yval, round(yval, 2), va='bottom', ha='center')
 
             # Subplot para a efetivação do vendedor
             bars_efetivacao_vendedor = axs[i, 1].bar(['Efetivação'], [estatistica_vendedor.efetivacao], color='red')
-            axs[i, 1].set_title(f'Efetivação de {vendedor.user.username}')
+            axs[i, 1].set_title(f'Efetivação de {nome_completo}')
             axs[i, 1].set_ylabel('Valores')
 
             for bar in bars_efetivacao_vendedor:
                 yval = bar.get_height()
-                axs[i, 1].text(bar.get_x() + bar.get_width()/2, yval, round(yval, 2), va='bottom', ha='center')
+                axs[i, 1].text(bar.get_x() + bar.get_width() / 2, yval, round(yval, 2), va='bottom', ha='center')
 
         except Estatistica_user.DoesNotExist:
             messages.warning(request, f'As estatísticas do vendedor {vendedor.user.username} não estão disponíveis.')
@@ -270,9 +280,11 @@ def dashboard_todos_usuarios(request):
                                estatistica_usuario.orcamento,
                                estatistica_usuario.pedido]
 
+            nome_completo = f"{usuario.first_name} {usuario.last_name}".strip() or usuario.username
+
             # Subplot para as estatísticas do usuário
-            bars_usuario = axs[i, 0].bar(categorias, valores_usuario, label=usuario.username, color='black')
-            axs[i, 0].set_title(f'Estatísticas de {usuario.username}')
+            bars_usuario = axs[i, 0].bar(categorias, valores_usuario, label=nome_completo, color='black')
+            axs[i, 0].set_title(f'Estatísticas de {nome_completo}')
             axs[i, 0].set_ylabel('Valores')
 
             for bar in bars_usuario:
@@ -281,7 +293,7 @@ def dashboard_todos_usuarios(request):
 
             # Subplot para a efetivação do usuário
             bars_efetivacao_usuario = axs[i, 1].bar(['Efetivação'], [estatistica_usuario.efetivacao], color='red')
-            axs[i, 1].set_title(f'Efetivação de {usuario.username}')
+            axs[i, 1].set_title(f'Efetivação de {nome_completo}')
             axs[i, 1].set_ylabel('Valores')
 
             for bar in bars_efetivacao_usuario:

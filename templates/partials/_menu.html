@@ -7,13 +7,25 @@
         <div class="menu_lateral_item">
             <a href="{% url 'index' %}"><img class="menu_icone" src="{% static 'Assets/icones/casa.png' %}" title="Home"/></a>
         </div>
-        
+        <div class="menu_lateral_item">
+          <a href="#" onClick="history.go(-1)">
+            <img img class="menu_icone" src="{% static 'Assets/icones/esquerda.png' %}" alt="Voltar">
+        </a>
+        </div>
+        <div class="menu_lateral_item">
+          <a href="#" onCLick="history.forward()">
+            <img img class="menu_icone" src="{% static 'Assets/icones/direita.png' %}" alt="Voltar">
+        </a>
+        </div>
+
         <div class="menu_lateral_item">
             <a href="{% url 'lista_carrinho' %}"><img class="menu_icone" src="{% static 'Assets/icones/carrinho-de-compras.png' %}" title="Ver Carrinho"/></a>
         </div>
         <div class="menu_lateral_item">
             <a href="{% url 'logout'%}"><img class="menu_icone" src="{% static 'Assets/icones/logar.png' %}" title="Logout"/></a>
         </div>
+
+        
       </div>
     
   </div>    

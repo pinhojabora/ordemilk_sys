@@ -29,9 +29,9 @@ class Produto(models.Model):
     nome = models.TextField(max_length=100, null=False, blank=False)
     codigo = models.CharField(max_length=100, null=False, blank=False, default='')
     unidade = models.CharField(max_length=4, null=False, blank=False, default='')
-    descricao = models.TextField(null=False, blank=False)
-    peso = models.CharField(max_length=100, null=False, blank=False, default='')
-    dimensoes = models.CharField(max_length=100, null=False, blank=False, default='')
+    descricao = models.TextField(null=True, blank=True)
+    peso = models.CharField(max_length=100, null=True, blank=True, default='')
+    dimensoes = models.CharField(max_length=100, null=True, blank=True, default='')
     preco = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     preco_com_ipi = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, null=True, blank=True)
@@ -47,6 +47,7 @@ class Produto(models.Model):
     conj_ordenha = models.BooleanField(default=False)
     nobreak = models.BooleanField(default=False)
     maximo_vacuo = models.IntegerField(null=True, blank=True, default=0)
+    numero_conjuntos = models.IntegerField(null=True, blank=True, default=0)
     
     def __str__(self):
         return self.nome

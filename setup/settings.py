@@ -28,7 +28,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*", "localhost", "10.10.1.112"]
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admin_honeypot',
+    'django.contrib.humanize',
     
     'apps.geral.apps.GeralConfig',
     'apps.usuarios.apps.UsuariosConfig',
@@ -129,7 +130,9 @@ USE_I18N = True
 
 USE_TZ = True
 
-THOUSAND_SEPARATOR='.',
+
+
+#THOUSAND_SEPARATOR='.',
 USE_THOUSAND_SEPARATOR=True
 
 

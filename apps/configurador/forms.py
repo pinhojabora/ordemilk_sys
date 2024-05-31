@@ -6,19 +6,16 @@ class ConfiguradorForms(forms.ModelForm):
         class Meta:
                 model = Configurador
                 fields = '__all__'
-                exclude = ['usuario']
+                exclude = ['usuario', 'vacuo_recomendado', 'valor_total', 'gerenciamento','quant_gerenciamento', 'numero_conjuntos', 'fator_calculo_modelo', 'tipo_gerenciamento']
                 labels = {
             'data_configurador':'Data',
             'nome_cliente':'Cliente',
-            'endereco_cliente':'Endereço',
+            'nome_fazenda':'Nome da fazenda',
             'cidade':'Cidade',
             'estado':'Estado',
-            'cep': 'CEP',
-            'cnpj_cpf': 'CNPJ/CPF',
-            'insc_estadual': 'Inscrição Estadual',
+            'altitude':'Altitude',
             'fone': 'Fone',
-            'email': 'E-mail',
-            'observacao': 'Observações',
+            
 
         }
 
@@ -32,15 +29,13 @@ class ConfiguradorForms(forms.ModelForm):
             }
         ),
          'nome_cliente': forms.TextInput(attrs={'class':'form-control'}),   
-         'endereco_cliente': forms.TextInput(attrs={'class':'form-control'}),
+         'nome_fazenda': forms.TextInput(attrs={'class':'form-control'}),
          'cidade': forms.TextInput(attrs={'class':'form-control'}),
          'estado': forms.TextInput(attrs={'class':'form-control'}),
          'cep': forms.TextInput(attrs={'class':'form-control'}),
-         'cnpj_cpf': forms.TextInput(attrs={'class':'form-control'}),
-         'insc_estadual': forms.TextInput(attrs={'class':'form-control'}),
+         'altitude': forms.NumberInput(attrs={'class':'form-control'}),
          'fone': forms.TextInput(attrs={'class':'form-control'}),
-         'email': forms.TextInput(attrs={'class':'form-control'}),
-         'observacao': forms.Textarea(attrs={'class':'form-control'}),
+        
  
         }
         def save(self, commit=True, user=None):

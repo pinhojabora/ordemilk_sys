@@ -54,13 +54,14 @@ class Historico_pipeline(models.Model):
 
 class Itens_pipeline(models.Model):
     pipeline = models.ForeignKey(Pipeline, on_delete=models.CASCADE, null=False, blank=False, related_name='itens_pipeline')
-    produto = models.ForeignKey(Produto, on_delete=models.DO_NOTHING, null=False, blank=False, related_name='itens_pipeline')
+    produto = models.CharField(max_length=300, null=False, blank=False)
+    quantidade = models.PositiveIntegerField(default=1)
 
 
 
 class Envolvido_pipeline(models.Model):
      envolvido = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=False, blank=False, related_name='envolvido_pipeline')
-
+     pipeline = models.ForeignKey(Pipeline, on_delete=models.DO_NOTHING, null=False, blank=False, related_name='envolvido_pipeline')
 
 class Atividade_pipeline(models.Model):
      data_atividade = models.DateField(default=timezone.now, blank=False)

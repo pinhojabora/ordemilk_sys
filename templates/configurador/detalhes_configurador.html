@@ -11,17 +11,16 @@
             <div class="dados_orcamento"> 
                 <div class="dados_orcamento_grupo">
                     <p class="dados_orcamento_legenda">Data da configuração:</p><p class="dados_orcamento_input">{{ configurador.data_configuracao }}</p>
-                    <p class="dados_orcamento_legenda">Endereço do cliente:</p><p class="dados_orcamento_input">{{ configurador.endereco_cliente }}</p>
+                    <p class="dados_orcamento_legenda">Nome da Fazenda:</p><p class="dados_orcamento_input">{{ configurador.nome_fazenda }}</p>
                     <p class="dados_orcamento_legenda">Cidade:</p><p class="dados_orcamento_input">{{ configurador.cidade }}</p>
                     <p class="dados_orcamento_legenda">Estado:</p><p class="dados_orcamento_input">{{ configurador.estado }}</p>
-                    <p class="dados_orcamento_legenda">CEP:</p><p class="dados_orcamento_input">{{ configurador.cep }}</p>
                     <p class="dados_orcamento_legenda">Fone:</p><p class="dados_orcamento_input">{{ configurador.fone }}</p>
-                    <p class="dados_orcamento_legenda">E-mail:</p><p class="dados_orcamento_input">{{ configurador.email }}</p> 
+                    <p class="dados_orcamento_legenda">Altitude:</p><p class="dados_orcamento_input">{{ configurador.altitude }}</p>
+                    <p class="dados_orcamento_legenda">Vácuo recomendado:</p><p class="dados_orcamento_input">{{ configurador.vacuo_recomendado }}</p>
                 </div>
                                 
                 <div class="dados_orcamento_grupo">
-                    <p class="dados_orcamento_legenda">Observações:</p><p class="dados_orcamento_input">{{ configurador.observacao }}</p>
-                    <p class="dados_orcamento_legenda">Vendedor:</p><p class="dados_orcamento_input">{{ configurador.usuario }}</p>
+                    <p class="dados_orcamento_legenda">Vendedor:</p><p class="dados_orcamento_input">{{ configurador.usuario.get_full_name }}</p>
                 </div>
                 <div class="dados_orcamento_grupo">
                     <p class="dados_orcamento_legenda">Energia:</p><p class="dados_orcamento_input">{{ configurador.tensao_energia }}</p>

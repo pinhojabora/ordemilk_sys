@@ -14,6 +14,7 @@ class Modelo_sala(models.Model):
 
 class Modelo_equipamento(models.Model):
     modelo_equipamento_nome = models.CharField(max_length=100, null=False, blank=False)
+    fator_calculo = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return self.modelo_equipamento_nome
@@ -38,3 +39,4 @@ class Tipo_gerenciamento(models.Model):
     
 class ArquivoExcel(models.Model):
     arquivo = models.FileField(upload_to='uploads/excel/')
+

@@ -10,6 +10,13 @@ from apps.pedido.views import(
     romaneio_pedido,
     imprimir_romaneio_pdf,
     imprimir_pedido_pdf,
+    adicionar_parcela_pedido,
+    editar_parcela_pedido,
+    excluir_parcela_pedido,
+    cadastro_item_pedido,
+    editar_item_pedido,
+    excluir_item_pedido,
+    editar_entrada_pedido
 ) 
 
 urlpatterns = [
@@ -23,4 +30,11 @@ urlpatterns = [
         path('romaneio_pedido/<int:pedido_id>/', romaneio_pedido, name='romaneio_pedido'),
         path('imprimir_romaneio/<int:pedido_id>/pdf/', imprimir_romaneio_pdf, name='imprimir_romaneio_pdf'),
         path('imprimir_pedido/<int:pedido_id>/pdf/', imprimir_pedido_pdf, name='imprimir_pedido_pdf'),
+        path('adicionar_parcela_pedido/<int:pedido_id>/', adicionar_parcela_pedido, name='adicionar_parcela_pedido'),
+        path('editar_parcela_pedido/<int:parcela_id>/', editar_parcela_pedido, name='editar_parcela_pedido'),
+        path('excluir_parcela_pedido/<int:parcela_id>/', excluir_parcela_pedido, name='excluir_parcela_pedido'),
+        path('pedido/<int:pedido_id>/cadastro-item/', cadastro_item_pedido, name='cadastro_item_pedido'),
+        path('editar-item-pedido/<int:item_id>/', editar_item_pedido, name='editar_item_pedido'),
+        path('excluir-item-pedido/<int:item_id>/', excluir_item_pedido, name='excluir_item_pedido'),
+        path('editar_entrada_pedido/<int:pedido_id>/', editar_entrada_pedido, name='editar_entrada_pedido'),
 ]

@@ -3,7 +3,13 @@
 {% block content %}
 
     <div class="centro">
-        <h1 class="titulo_padrao">Carrinho</h1>
+        <h1 class="titulo_padrao">Produtos Selecionados</h1>
+        <div class="submenu">
+            <div class="submenu_item">
+               <a href="{% url 'limpar_carrinho' %}"><button class="btn_padrao">Limpar produtos</button></a> 
+            </div>
+            
+        </div>
         <div>
             <table class="table">
                 <thead>

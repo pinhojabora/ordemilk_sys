@@ -5,7 +5,7 @@ from apps.dashboard.models import Estatistica_user, Estatistica_geral
 from django.contrib import messages
 from apps.pedido.views import lista_pedido
 from apps.orcamento.models import Orcamento, Item_orcamento, Parcela_orcamento
-from apps.pedido.models import Pedido, Item_pedido
+from apps.pedido.models import Pedido, Item_pedido, Parcela_pedido
 from apps.produto.models import Produto
 from apps.carrinho.models import Carrinho
 from django.http import HttpResponse
@@ -260,22 +260,38 @@ def editar_entrada_orcamento(request, orcamento_id):
 
 def adicionar_parcela(request, orcamento_id):
     if not request.user.is_authenticated:
-                messages.error(request, 'Usuário não logado')
-                return redirect('login')
-    
-    orcamento = Orcamento.objects.get(pk=orcamento_id)
-    
+        messages.error(request, 'Usuário não logado')
+        return redirect('login')
+
+    orcamento = get_object_or_404(Orcamento, pk=orcamento_id)
+
     if request.method == 'POST':
         form = AdicionarParcelaForm(request.POST)
         if form.is_valid():
             parcela = form.save(commit=False)
             parcela.orcamento = orcamento
+
+            # Calculate valor_parcela based on total value divided by number of parcelas
+            valor_total = orcamento.saldo
+            quantia_parcelas = int(orcamento.parcelas)
+            if quantia_parcelas > 0:
+                parcela.valor_parcela = valor_total / quantia_parcelas
+            else:
+                messages.error(request, 'A quantia de parcelas deve ser maior que zero.')
+                return render(request, 'orcamento/adicionar_parcela.html', {'form': form, 'orcamento': orcamento})
+
+            # Debugging prints
+            print(f'Valor total: {valor_total}, Quantia parcelas: {quantia_parcelas}, Valor parcela: {parcela.valor_parcela}')
+
             parcela.save()
+            messages.success(request, 'Parcela adicionada com sucesso!')
             return redirect('detalhes_orcamento', orcamento_id=orcamento_id)
+        else:
+            messages.error(request, 'Erro ao adicionar parcela. Verifique os dados informados.')
     else:
         form = AdicionarParcelaForm()
-    
-    return render(request, 'orcamento/adicionar_parcela.html', {'form': form,'orcamento': orcamento})
+
+    return render(request, 'orcamento/adicionar_parcela.html', {'form': form, 'orcamento': orcamento})
 
 def editar_parcela(request, parcela_id):
     if not request.user.is_authenticated:
@@ -323,7 +339,7 @@ def converter_orcamento_pedido(request, orcamento_id):
         
         # Criar o pedido com base nos dados do orçamento
         novo_pedido = Pedido.objects.create(
-            data_pedido=orcamento.data_orcamento,
+            data_pedido=datetime.now(),
             nome_cliente=orcamento.nome_cliente,
             endereco_cliente=orcamento.endereco_cliente,
             cidade=orcamento.cidade,
@@ -354,8 +370,17 @@ def converter_orcamento_pedido(request, orcamento_id):
                 valor_unitario=item_orcamento.valor_unitario,
                 valor_total=item_orcamento.valor_total,
             )
+
+        # Copiar parcelas do orçamento para o pedido
+        for parcela_orcamento in orcamento.parcela_orcamento_set.all():
+            Parcela_pedido.objects.create(
+                pedido=novo_pedido,
+                data_parcela=parcela_orcamento.data_parcela,
+                valor_parcela=item_orcamento.valor_parcela,
+            )
         
-            
+        # Excluir o orçamento após a conversão em pedido
+        orcamento.delete()   
         
         # Exibir mensagem de sucesso
         messages.success(request, 'Orçamento convertido em pedido com sucesso!')
@@ -460,3 +485,33 @@ def imprimir_orcamento_pdf(request, orcamento_id):
     response['Content-Disposition'] = 'attachment; filename="impressao_orcamento.pdf"'
 
     return response
+
+
+def atualizar_valor_orcamento(request, orcamento_id):
+    # Obtém o orçamento pelo ID
+    orcamento = get_object_or_404(Orcamento, id=orcamento_id)
+    
+    # Atualiza cada item do orçamento
+    for item in orcamento.item_orcamento_set.all():
+        produto = item.produto
+        item.valor_unitario = produto.preco_com_ipi
+        item.valor_total = item.quantidade * produto.preco_com_ipi
+        item.save()
+
+    # Atualiza o valor total do orçamento
+    orcamento.valor_total = orcamento.item_orcamento_set.aggregate(
+        total=Sum(F('valor_total'))
+    )['total'] or 0
+
+    # Define o vencimento para 30 dias a partir de agora
+    orcamento.vencimento_orcamento = timezone.now().date() + timedelta(days=30)
+    orcamento.dias_faltantes = 30
+
+    # Salva as alterações no orçamento
+    orcamento.save()
+
+    messages.success(request, 'Orçamento atualizado com sucesso.')
+    return redirect('index_orcamento')
+
+
+

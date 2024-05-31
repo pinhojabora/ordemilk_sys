@@ -1,39 +1,165 @@
 {% extends 'shared/base.html' %}
 {% load static %}
 {% block content %}
+<div class="centro">
+    <table>
+        <tr>
+            <th><h1>{{ pipeline.titulo }}</h1></th>
+            <th></th>
+            <th><a href="{% url 'editar_prospecto' pipeline.id %}">
+                <img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar Prospecto"/>
+            </a> </th>
+        </tr>
+    </table>
+    
+    <p><strong>Formulário inicial</strong></p>
+    <p>Criado por {{ pipeline.usuario.get_full_name }} em {{ pipeline.data_inclusao }}</p>
+        <table class="table">
+            <tr>
+                <th class="table_cabecalho2"><strong>Cliente: </strong></th>
+                <th class="table_cabecalho2"><strong>Contato: </strong></th>
+                <th class="table_cabecalho2"><strong>Telefone: </strong></th>
+            </tr>
+            <tr>
+                <td class="table_item2">{{ pipeline.cliente }}</td>
+                <td class="table_item2">{{ pipeline.pessoa_contato }}</td>
+                <td class="table_item2">{{ pipeline.telefone }}</td>
+            </tr>
+        
+            <tr>
+                <th class="table_cabecalho2"><strong>E-mail: </strong></th>
+                <th class="table_cabecalho2"><strong>Endereço:</strong></th>
+                <th class="table_cabecalho2"><strong>Setor ou Atividade: </strong></th>
+            </tr>
+            <tr>
+                <td class="table_item2">{{ pipeline.email }}</td>
+                <td class="table_item2">Residente em {{ pipeline.cidade }} - {{ pipeline.estado }}</td>
+                <td class="table_item2">{{ pipeline.setor_atividade }}</td>
+            </tr>
+        
+            <tr>
+                <th class="table_cabecalho2"><strong>Fonte da Lead:</strong></th>
+                <th class="table_cabecalho2"><strong>Fase atual:</strong></th>
+                <th class="table_cabecalho2"><strong>Demo técnica:</strong></th>
+            </tr>
+            <tr>
+                <td class="table_item2">{{ pipeline.fonte_lead }}</td>
+                <td class="table_item2">{{ pipeline.fase.nome_fase }}</td>
+                <td class="table_item2">{{ pipeline.fase.demo_tecnica }}</td>
+            </tr>
+            
+                         
+            <tr>
+                <th class="table_cabecalho2" colspan="3"><strong>Detalhes da Oportunidade</strong></th>
+            </tr>
+            <tr>
+                <td class="table_item2" colspan="3">{{ pipeline.detalhes_oportunidade }}</td>
+            </tr>
 
-
-            <div class="centro">
+            <tr>
+                <th class="table_cabecalho2" colspan="3"><strong>Produto customizado:</strong></th>
+            </tr>
+            <tr>
+                <td class="table_item2" colspan="3">{{ pipeline.produto_customizado }}</td>
+            </tr>
+        </table>
+        
+    
+    
+    
+    <div class="dados_orcamento"> 
                 
-                <h1>{{ pipeline.titulo }}</h1>
-                <p><strong>Formulário inicial</strong></p>
-                <p>Criador por {{ pipeline.usuario }} em {{ pipeline.data_inclusao }}</p></br>
-                <p><strong>Cliente</strong></p>
-                <p>{{ pipeline.cliente }}</p></br>
-                <p><strong>Contato</strong></p>
-                <p>{{ pipeline.pessoa_contato }}</p></br>
-                <p><strong>Telefone</strong></p>
-                <p>{{ pipeline.telefone }}</p></br>
-                <p><strong>E-mail</strong></p>
-                <p></p>{{ pipeline.email }}</p></br>
-                <p><strong>Cidade</strong></p>
-                <p>Residente em {{ pipeline.cidade }}  - {{ pipeline.estado }}</p></br>
-                <p><strong>Setor ou Atividade</strong></p>
-                <p>{{ pipeline.setor_atividade }}</p></br>
-                <p><strong>Fonte da Lead</strong></p>
-                <p>{{ pipeline.fonte_lead }}</p></br>
-                <p><strong>Detalhes da Oportunidade</strong></p>
-                <p></p>{{ pipeline.detalhes_oportunidade }}</p></br>
-                </br>
-                <p><strong>Fase atual</strong></p>
-                <p>{{ pipeline.fase }}</p>
-                       
-                        
-                        
-                        
-            </div>
-    </div>
-       
+        <div class="dados_orcamento_grupo">
+            <a href="{% url 'adicionar_envolvido' pipeline.id %}">
+                <img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Adicionar Envolvido"/>
+            </a> 
+
+            <h3>Envolvidos</h3>
+            <table>
+                <thead>
+                    <tr class="table_cabecalho">
+                        <th colspan="2">Nome Completo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for envolvido in envolvido_pipeline %}
+                    <tr>
+                        <td class="table_item">{{ envolvido.envolvido.get_full_name }}</td>
+                        <td class="table_item"><a href="{% url 'excluir_envolvido' envolvido.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td class="table_item" colspan="2">Nenhum envolvido encontrado</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>    
+        <div class="dados_orcamento_grupo">
+            <a href="{% url 'adicionar_item' pipeline.id %}">
+                <img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Adicionar Item"/>
+            </a> 
+
+            <h3>Itens</h3>
+            <table>
+                <thead>
+                    <tr class="table_cabecalho">
+                        <th>Item</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in item_pipeline %}
+                    <tr>
+                        <td class="table_item">{{ item.produto }}</td>
+                        <td class="table_item"> {{ item.quantidade }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td class="table_item" colspan="2">Nenhum item encontrado</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="dados_orcamento_grupo">
+            <a href="{% url 'editar_proposta' pipeline.id %}">
+                <img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar Proposta"/>
+            </a> 
+
+            <h3>Proposta</h3>
+            <table>
+                    <tr class="table_cabecalho">
+                        <th colspan="2">Detalhes da Proposta</th>
+                    </tr>
+                    <tr>
+                        <td class="table_item2" colspan="2">{{ pipeline.detalhes_proposta }}</td> 
+                    </tr>
+                    <tr class="table_cabecalho">
+                        <th>Valor</th>
+                        <th>Desconto</th>
+                    </tr>
+                    <tr>
+                        <td class="table_item2">{{ pipeline.total_proposta }}</td> 
+                        <td class="table_item2">{{ pipeline.desconto_proposta }}</td>
+                    </tr>
+                    <tr class="table_cabecalho">
+                        <th>Acrescimo</th>
+                        <th>Valor Final</th>
+                    </tr>
+                    <tr>
+                        <td class="table_item2">{{ pipeline.acrescimo_proposta }}</td> 
+                        <td class="table_item2">{{ pipeline.final_proposta }}</td>
+                    </tr>
+                    <tr class="table_cabecalho">
+                        <th colspan="2">Validade da Proposta</th>
+                    </tr>
+                    <tr>
+                        <td class="table_item2" colspan="2">{{ pipeline.validade_proposta }}</td> 
+                    </tr>
+                
+            </table>
+        </div>        
+    </div>   
 </div>
-   
- {% endblock %}
+{% endblock %}

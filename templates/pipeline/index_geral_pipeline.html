@@ -1,0 +1,50 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="centro">
+    <div class="dados_orcamento">
+        <div>
+           <h1>Quadro Geral</h1> 
+
+           <a href="{% url 'cadastro_prospecto'%}"><img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Cadastrar Prospecto"/></a>
+           
+        
+            <a href="{% url 'index_pipeline'%}"><img class="table_icone" src="{% static 'Assets/icones/usuario.png' %}" title="Quadro por Usuário"/></a>  
+        </div>
+    </div>
+    
+    <div class="quadro">
+        {% for fase in fases %}
+        <div class="quadro_coluna">
+            <h3 class="quadro_card_titulo">{{ fase.nome_fase }}</h3>
+            <div>
+                {% for pipeline in pipelines %}
+                {% if pipeline.fase == fase %}
+                <div class="quadro_card">
+                    <p class="quadro_card_texto">{{ pipeline.titulo }}</p>
+                    <p class="quadro_card_texto">Cliente:</p>
+                    <p class="quadro_card_texto">{{ pipeline.cliente }}</p>
+                    <p class="quadro_card_texto">Incluído em {{ pipeline.data_inclusao  }}</p>
+                    <table>
+                        <tr>
+                            <th><a href="{% url 'detalhes_prospecto' pipeline.id %}">
+                            <img class="table_icone" src="{% static 'Assets/icones/detalhes.png' %}" title="Mais detalhes"/>
+                        </a></th>
+                            <th><a href="{% url 'mover_pipeline' pipeline.id %}">
+                            <img class="table_icone" src="{% static 'Assets/icones/seta-direita.png' %}" title="Mover de fase"/>
+                        </a></th>
+                        </tr>
+                    </table>
+                    
+                    
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

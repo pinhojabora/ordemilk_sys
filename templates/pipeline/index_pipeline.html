@@ -3,31 +3,42 @@
 {% block content %}
 
 <div class="centro">
-    <div class="submenu_item">
-        <a href="{% url 'cadastro_prospecto'%}">
-            <img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Cadastrar Pedido"/>
-        </a>
-    </div>
+    <div class="dados_orcamento">
+        <div>
+           <h1>Quadro por Usuario</h1> 
 
+           <a href="{% url 'cadastro_prospecto'%}"><img class="table_icone" src="{% static 'Assets/icones/inserir.png' %}" title="Cadastrar Prospecto"/></a>
+           
+        
+            <a href="{% url 'index_geral_pipeline'%}"><img class="table_icone" src="{% static 'Assets/icones/companhia.png' %}" title="Quadro Geral"/></a>  
+        </div>
+    </div>
+           
+    
     <div class="quadro">
         {% for fase in fases %}
         <div class="quadro_coluna">
-            <h3>{{ fase.nome_fase }}</h3>
+            <h3 class="quadro_card_titulo">{{ fase.nome_fase }}</h3>
             <div>
                 {% for pipeline in pipelines %}
                 {% if pipeline.fase == fase %}
                 <div class="quadro_card">
-                    <p>{{ pipeline.situacao }}</p>
-                    <p class="quadro_card_titulo">{{ pipeline.titulo }}</p>
-                    <p>Cliente:</p>
-                    <p>{{ pipeline.cliente }}</p>
-                    <p>{{ pipeline.data_inclusao  }}</p>
-                    <div>
-                        <a href="{% url 'detalhes_prospecto' pipeline.id %}">
+                    <p class="quadro_card_texto">{{ pipeline.titulo }}</p>
+                    <p class="quadro_card_texto">Cliente:</p>
+                    <p class="quadro_card_texto">{{ pipeline.cliente }}</p>
+                    <p class="quadro_card_texto">Incluído em {{ pipeline.data_inclusao  }}</p>
+                    <table>
+                        <tr>
+                            <th><a href="{% url 'detalhes_prospecto' pipeline.id %}">
                             <img class="table_icone" src="{% static 'Assets/icones/detalhes.png' %}" title="Mais detalhes"/>
-                        </a>
-                    </div>
-                    <!-- Adicione mais informações dos cards aqui conforme necessário -->
+                        </a></th>
+                            <th><a href="{% url 'mover_pipeline' pipeline.id %}">
+                            <img class="table_icone" src="{% static 'Assets/icones/seta-direita.png' %}" title="Mover de fase"/>
+                        </a></th>
+                        </tr>
+                    </table>
+                    
+                    
                 </div>
                 {% endif %}
                 {% endfor %}

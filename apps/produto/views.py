@@ -85,6 +85,19 @@ def buscar(request):
     return render(request, 'produto/buscar.html', {'produtos': produtos, 'termo_busca': termo_busca})
     
 
+def buscar_lista_precos(request):
+    if not request.user.is_authenticated:
+                messages.error(request, 'Usuário não logado')
+                return redirect('login')
+    if "buscar" in request.GET:
+        termo_busca = request.GET['buscar']
+        if termo_busca:
+            # Filtra os produtos por nome ou código, ignorando maiúsculas e minúsculas
+            produtos = Produto.objects.filter(Q(nome__icontains=termo_busca) | Q(codigo__icontains=termo_busca))
+            
+    return render(request, 'produto/buscar_lista.html', {'produtos': produtos, 'termo_busca': termo_busca})
+
+
 
 def editar_produto(request, produto_id):
     if not request.user.is_authenticated:

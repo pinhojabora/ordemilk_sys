@@ -19,6 +19,7 @@ class ProdutoForms(forms.ModelForm):
             'extracao': 'Extração',
             'conj_ordenha': 'Conjunto ordenha',
             'nobreak': 'Nobreak',
+            'numero_conjuntos': 'Número de conjuntos',
         }
 
 
@@ -35,7 +36,8 @@ class ProdutoForms(forms.ModelForm):
          'sistema_limpeza': forms.CheckboxInput(attrs={}),
          'extracao': forms.CheckboxInput(attrs={}),
          'conj_ordenha': forms.CheckboxInput(attrs={}),
-         'nobreak': forms.CheckboxInput(attrs={})
+         'nobreak': forms.CheckboxInput(attrs={}),
+         'numero_conjuntos': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
 class CategoriaForms(forms.ModelForm):

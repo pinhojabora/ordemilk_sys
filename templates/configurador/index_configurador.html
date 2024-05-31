@@ -13,6 +13,7 @@
                     <tr class="table_cabecalho">
                         <th>Data</th>
                         <th>Cliente</th>
+                        <th>Fazenda</th>
                         <th>Ações</th>
                         
                     </tr>
@@ -22,6 +23,7 @@
                     <tr class="table_item">
                         <td>{{ configurador.data_configuracao|date:"d/m/Y" }}</td>
                         <td>{{ configurador.nome_cliente }}</td>
+                        <td>{{ configurador.nome_fazenda }}</td>
                         <td class="table_item_quantidade"><a href="{% url 'configurador_contencao' configurador.id %}"><img class="table_icone" src="{% static 'Assets/icones/configurar.png' %}" title="Configurar"/></a>
                             <a href="{% url 'detalhes_configurador' configurador.id %}"><img class="table_icone" src="{% static 'Assets/icones/detalhes.png' %}" title="Mais detalhes"/></a>
                             <a href="{% url 'editar_configurador' configurador.id %}"><img class="table_icone" src="{% static 'Assets/icones/editar.png' %}" title="Editar"/></a>

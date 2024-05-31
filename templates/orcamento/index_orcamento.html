@@ -40,6 +40,7 @@
                             <a href="{% url 'excluir_orcamento' orcamento.id %}"><img class="table_icone" src="{% static 'Assets/icones/excluir.png' %}" title="Excluir"/></a>
                             <a href="{% url 'converter_orcamento_para_pedido' orcamento.id %}"><img class="table_icone" src="{% static 'Assets/icones/pedido-processado.png' %}" title="Converter em pedido"/></a>
                             <a href="{% url 'imprimir_orcamento_pdf' orcamento.id %}"><img class="table_icone" src="{% static 'Assets/icones/imprimir.png' %}" title="PDF Orçamento"/></a>
+                            <a href="{% url 'atualizar_valor_orcamento' orcamento.id %}"><img class="table_icone" src="{% static 'Assets/icones/atualizar.png' %}" title="Atualizar valor do Orçamento"/></a>
                         </td>
                     </tr>
                 {% endfor %}

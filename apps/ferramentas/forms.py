@@ -38,6 +38,7 @@ class Modelo_equipamentoForms(forms.ModelForm):
                 exclude = []
                 labels = {
             'modelo_equipamento_nome':'Modelo de equipamento',
+            'fator_calculo': 'Fator de calculo',
         }
 
 

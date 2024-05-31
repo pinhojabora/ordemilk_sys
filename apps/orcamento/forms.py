@@ -6,7 +6,7 @@ class OrcamentoForms(forms.ModelForm):
         class Meta:
                 model = Orcamento
                 fields = '__all__'
-                exclude = ['entrada', 'saldo', 'usuario', 'vencimento_orcamento', 'dias_faltantes']
+                exclude = ['entrada', 'saldo', 'usuario', 'vencimento_orcamento', 'dias_faltantes', 'valor_total']
                 labels = {
             'data_orcamento':'Data',
             'nome_cliente':'Cliente',
@@ -20,7 +20,6 @@ class OrcamentoForms(forms.ModelForm):
             'email': 'E-mail',
             'forma_pagamento': 'Forma de pagamento',
             'pagamento': 'Pagamento em',
-            'valor_total': 'Valor total',
             'parcelas': 'Parcelas',
             'observacao': 'Observações',
 
@@ -46,7 +45,6 @@ class OrcamentoForms(forms.ModelForm):
          'email': forms.TextInput(attrs={'class':'form-control'}),
          'forma_pagamento': forms.Select(attrs={'class':'form-control'}),
          'pagamento': forms.Select(attrs={'class':'form-control'}),
-         'valor_total': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
          'parcelas': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
          'observacao': forms.Textarea(attrs={'class':'form-control'}),
  
@@ -92,9 +90,8 @@ class AdicionarParcelaForm(forms.ModelForm):
     class Meta:
         model = Parcela_orcamento
         fields = '__all__'
-        exclude = ['orcamento']
+        exclude = ['orcamento','valor_parcela']
  
     widgets = {
             'data_parcela': forms.DateInput(format = '%d/%m/%Y',attrs={'type':'date','class':'form-control'}),
-            'valor_parcela': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
     }         

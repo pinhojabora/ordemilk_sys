@@ -18,9 +18,9 @@
                 </div> 
                 
                 <div class="dados_orcamento_grupo">
-                    <div>
-                    <p class="dados_orcamento_legenda">Selecione a Contenção:</p>
-                <table class="table">
+                    
+                        <p class="dados_orcamento_legenda">Selecione a Contenção:</p>
+                        <table class="table">
                     <thead>
                         <tr class="table_cabecalho">
                             <th>Produto</th>
@@ -44,8 +44,17 @@
                             </td> 
                         </tr>
                     </tbody>     
-                    </table> 
+                        </table> 
+                    
                 </div>
+                <div class="dados_orcamento_grupo">
+                                            
+                        <div class="submenu">
+                            <div class="submenu_item">
+                               <a href="{% url 'configurador_unidade_final' configurador_id=configurador.id %}"><button class="btn_padrao">Prosseguir sem incluir item</button></a> 
+                            </div>
+                            
+                        </div>
                 </div>
             </div>
             

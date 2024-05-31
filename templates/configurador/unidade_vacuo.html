@@ -15,6 +15,7 @@
                         <p class="dados_orcamento_legenda">Modelo:</p><p class="dados_orcamento_input">{{ configurador.modelo_equipamento }}</p>
                         <p class="dados_orcamento_legenda">Linha:</p><p class="dados_orcamento_input">{{ configurador.tipo_linha }}</p>
                         <p class="dados_orcamento_legenda">Contenção:</p><p class="dados_orcamento_input">{{ configurador.tipo_contencao }}</p>
+                        <p class="dados_orcamento_legenda">Vácuo recomendado:</p><p class="dados_orcamento_input">{{ configurador.vacuo_recomendado }}</p>
                     </div> 
                     
                     <div class="dados_orcamento_grupo">
@@ -47,6 +48,15 @@
                                     {% endfor %}
                                 </tbody>     
                             </table> 
+                        </div>
+                    </div>
+                    <div class="dados_orcamento_grupo">
+                                            
+                        <div class="submenu">
+                            <div class="submenu_item">
+                               <a href="{% url 'configurador_extrator' configurador_id=configurador.id %}"><button class="btn_padrao">Prosseguir sem incluir item</button></a> 
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

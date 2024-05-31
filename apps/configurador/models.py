@@ -9,15 +9,10 @@ from django.contrib.auth.models import User
 class Configurador(models.Model):
     data_configuracao = models.DateField(default=datetime.today, blank=False)
     nome_cliente = models.CharField(max_length=100, null=False, blank=False)
-    endereco_cliente = models.CharField(max_length=100, null=False, blank=False)
+    nome_fazenda = models.CharField(max_length=100, null=True, blank=True)
     cidade = models.CharField(max_length=100, null=False, blank=False, default='')
     estado = models.CharField(max_length=2, null=False, blank=False, default='')
-    cep = models.CharField(max_length=9, null=False, blank=False, default='')
-    cnpj_cpf = models.CharField(max_length=18, null=False, blank=False, default='')
-    insc_estadual = models.CharField(max_length=25, null=False, blank=False, default='')
     fone = models.CharField(max_length=25, null=False, blank=False, default='')
-    email = models.CharField(max_length=100, null=False, blank=False, default='')
-    observacao = models.TextField(null=False, blank=False)
     tensao_energia = models.ForeignKey(Tensao_energia, on_delete=models.CASCADE, null=True, blank=True) 
     modelo_sala = models.ForeignKey(Modelo_sala, on_delete=models.CASCADE, null=True, blank=True)
     modelo_equipamento = models.ForeignKey(Modelo_equipamento, on_delete=models.CASCADE, null=True, blank=True)
@@ -27,6 +22,10 @@ class Configurador(models.Model):
     tipo_gerenciamento = models.ForeignKey(Tipo_gerenciamento, on_delete=models.CASCADE, null=True, blank=True)
     quant_gerenciamento = models.CharField(max_length=100, null=True, blank=True)
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0) 
+    vacuo_recomendado = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
+    altitude = models.DecimalField(max_digits=15, decimal_places=6, null=True, blank=True, default=0)
+    numero_conjuntos = models.IntegerField(null=True, blank=True, default=0)
+    fator_calculo_modelo = models.IntegerField(null=True, blank=True, default=0)
     usuario = models.ForeignKey(
             to=User,
             on_delete=models.SET_NULL,
@@ -34,6 +33,12 @@ class Configurador(models.Model):
             blank=True,
             related_name='configurador'
         )
+    
+    def save(self, *args, **kwargs):
+        if self.modelo_equipamento:
+            self.fator_calculo_modelo = self.modelo_equipamento.fator_calculo
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.nome_cliente
  

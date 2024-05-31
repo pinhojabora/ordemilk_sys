@@ -53,4 +53,9 @@ class Item_pedido(models.Model):
     quantidade = models.PositiveIntegerField(default=1)
     valor_unitario = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-   
+
+class Parcela_pedido(models.Model):
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, null=True, blank=True)
+    data_parcela = models.DateField(default=datetime.today, blank=False)
+    valor_parcela = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+

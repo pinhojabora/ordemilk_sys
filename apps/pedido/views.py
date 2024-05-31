@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from apps.pedido.forms import PedidoForms
+from apps.pedido.forms import PedidoForms, AdicionarParcelaPedidoForm, ItemPedidoInserirForm, ItemPedidoEditarForm
 from django.contrib import messages
 from apps.dashboard.models import Estatistica_user, Estatistica_geral
-from apps.pedido.models import Pedido, Item_pedido
+from apps.pedido.models import Pedido, Item_pedido, Parcela_pedido
 from apps.carrinho.models import Carrinho
 from datetime import datetime
 from django.http import HttpResponse
-from apps.produto.models import Producao1, Producao2
+from apps.produto.models import Producao1, Producao2, Produto
 from decimal import Decimal
+from django.db.models import Sum
 from xhtml2pdf import pisa
 from django.template.loader import render_to_string
 from io import BytesIO
@@ -236,10 +237,12 @@ def imprimir_romaneio_pdf(request, pedido_id):
 def imprimir_pedido_pdf(request, pedido_id):
     pedido_detalhado = get_object_or_404(Pedido, pk=pedido_id)
     itens_pedido = Item_pedido.objects.filter(pedido=pedido_detalhado)
-    
+    parcelas_pedido = Parcela_pedido.objects.filter(pedido=pedido_detalhado)
+
     context = {
         'pedido_detalhado': pedido_detalhado,
         'itens_pedido': itens_pedido,
+        'parcelas_pedido': parcelas_pedido,
     }
 
     # Renderizar o template HTML em uma string
@@ -259,3 +262,196 @@ def imprimir_pedido_pdf(request, pedido_id):
     response['Content-Disposition'] = 'attachment; filename="impressao_pedido.pdf"'
 
     return response
+
+
+def adicionar_parcela_pedido(request, pedido_id):
+    if not request.user.is_authenticated:
+        messages.error(request, 'Usuário não logado')
+        return redirect('login')
+
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+
+    if request.method == 'POST':
+        form = AdicionarParcelaPedidoForm(request.POST)
+        if form.is_valid():
+            parcela = form.save(commit=False)
+            parcela.pedido = pedido
+
+            # Calculate valor_parcela based on total value divided by number of parcelas
+            valor_total = pedido.saldo
+            quantia_parcelas = int(pedido.parcelas)
+            if quantia_parcelas > 0:
+                parcela.valor_parcela = valor_total / quantia_parcelas
+            else:
+                messages.error(request, 'A quantia de parcelas deve ser maior que zero.')
+                return render(request, 'pedido/adicionar_parcela.html', {'form': form, 'pedido': pedido})
+
+            # Debugging prints
+            print(f'Valor total: {valor_total}, Quantia parcelas: {quantia_parcelas}, Valor parcela: {parcela.valor_parcela}')
+
+            parcela.save()
+            messages.success(request, 'Parcela adicionada com sucesso!')
+            return redirect('detalhes_pedido', pedido_id=pedido_id)
+        else:
+            messages.error(request, 'Erro ao adicionar parcela. Verifique os dados informados.')
+    else:
+        form = AdicionarParcelaPedidoForm()
+
+    return render(request, 'pedido/adicionar_parcela.html', {'form': form, 'pedido': pedido})
+
+def editar_parcela_pedido(request, parcela_id):
+    if not request.user.is_authenticated:
+                messages.error(request, 'Usuário não logado')
+                return redirect('login')
+    
+    # Obtenha a parcela existente a ser editada
+    parcela = get_object_or_404(Parcela_pedido, pk=parcela_id)
+
+    if request.method == 'POST':
+        # Crie um formulário de parcela com os dados atualizados
+        form = AdicionarParcelaPedidoForm(request.POST, instance=parcela)
+        if form.is_valid():
+            form.save()
+            return redirect('detalhes_pedido', pedido_id=parcela.pedido.id)
+    else:
+        # Preencha o formulário com os dados existentes da parcela
+        form = AdicionarParcelaPedidoForm(instance=parcela)
+
+    return render(request, 'pedido/editar_parcela.html', {'form': form, 'parcela': parcela})
+
+def excluir_parcela_pedido(request, parcela_id):
+    if not request.user.is_authenticated:
+                messages.error(request, 'Usuário não logado')
+                return redirect('login')
+    
+    # Obtenha a parcela existente a ser excluída
+    parcela = get_object_or_404(Parcela_pedido, pk=parcela_id)
+
+    if request.method == 'POST':
+        # Exclua a parcela
+        parcela.delete()
+        return redirect('detalhes_pedido', pedido_id=parcela.pedido.id)
+
+    return render(request, 'pedido/excluir_parcela.html', {'parcela': parcela})
+
+
+def cadastro_item_pedido(request, pedido_id):
+    if not request.user.is_authenticated:
+                messages.error(request, 'Usuário não logado')
+                return redirect('login')
+    
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+    
+    if request.method == 'POST':
+        form = ItemPedidoInserirForm(request.POST)
+        if form.is_valid():
+            item_pedido = form.save(commit=False)
+            item_pedido.pedido = pedido
+            
+            # Importar e salvar o preço do produto
+            produto_id = form.cleaned_data['produto'].id
+            produto = Produto.objects.get(pk=produto_id)
+            item_pedido.valor_unitario = produto.preco_com_ipi
+            item_pedido.valor_total = item_pedido.quantidade * item_pedido.valor_unitario
+            
+            item_pedido.save()
+            
+            # Atualizar o valor_total do orçamento
+            pedido.valor_total += item_pedido.valor_total
+            pedido.save()
+            
+            messages.success(request, 'Item do pedido cadastrado com sucesso!')
+            return redirect('detalhes_pedido', pedido_id=pedido_id)
+    else:
+        form = ItemPedidoInserirForm()
+    
+    return render(request, 'pedido/cadastro_item_pedido.html', {'form': form, 'pedido': pedido})
+
+def editar_item_pedido(request, item_id):
+    if not request.user.is_authenticated:
+                messages.error(request, 'Usuário não logado')
+                return redirect('login')
+    
+    item = get_object_or_404(Item_pedido, pk=item_id)
+    
+    if request.method == 'POST':
+        form = ItemPedidoEditarForm(request.POST, instance=item)
+        if form.is_valid():
+            acrescimo = form.cleaned_data['acrescimo']
+            desconto = form.cleaned_data['desconto']
+            item.quantidade = form.cleaned_data['quantidade']
+            item.valor_unitario = form.cleaned_data['valor_unitario']
+            item.valor_total = item.quantidade * item.valor_unitario
+
+            if acrescimo:
+                item.valor_total += item.valor_total * (acrescimo / 100)
+                item.valor_unitario = item.valor_total / item.quantidade
+            elif desconto:
+                item.valor_total -= item.valor_total * (desconto / 100)
+                item.valor_unitario = item.valor_total / item.quantidade
+            
+            item.save()
+            
+            # Recalcular o valor total do orçamento após editar o item
+            pedido = item.pedido
+            itens_pedido = Item_pedido.objects.filter(pedido=pedido)
+            total_pedido = sum(item.valor_total for item in itens_pedido)
+            pedido.valor_total = total_pedido
+            pedido.save()
+
+            messages.success(request, 'Item do pedido atualizado com sucesso!')
+            return redirect('detalhes_pedido', pedido_id=item.pedido.id)
+    else:
+        form = ItemPedidoEditarForm(instance=item)
+        # Calcular valor unitário após acréscimo/desconto e passar para o formulário
+        if item.valor_total and item.quantidade:
+            form.fields['valor_unitario'].initial = item.valor_total / item.quantidade
+    
+    return render(request, 'pedido/editar_item_pedido.html', {'form': form, 'item': item})
+
+def excluir_item_pedido(request, item_id):
+    if not request.user.is_authenticated:
+                messages.error(request, 'Usuário não logado')
+                return redirect('login')
+    
+    item = get_object_or_404(Item_pedido, pk=item_id)
+    
+    if request.method == 'POST':
+        pedido = item.pedido
+        item.delete()
+        
+        # Recalcular o valor total do orçamento após excluir o item
+        total_pedido = Item_pedido.objects.filter(pedido=pedido).aggregate(Sum('valor_total'))['valor_total__sum'] or 0
+        pedido.valor_total = total_pedido
+        pedido.save()
+        
+        return redirect('detalhes_pedido', pedido_id=pedido.id)
+    
+    return render(request, 'pedido/excluir_item_pedido.html', {'item': item})
+
+
+def editar_entrada_pedido(request, pedido_id):
+    if not request.user.is_authenticated:
+                messages.error(request, 'Usuário não logado')
+                return redirect('login')
+    
+    # Obter o objeto Pedido existente ou retornar 404 se não encontrado
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+
+    if request.method == 'POST':
+        # Obter o valor de entrada do formulário e converter para Decimal
+        entrada_str = request.POST.get('entrada')
+        entrada_decimal = Decimal(entrada_str)
+
+        # Atualizar o valor de entrada do pedido
+        pedido.entrada = entrada_decimal
+        # Calcular o saldo subtraindo a entrada do valor total
+        pedido.saldo = pedido.valor_total - pedido.entrada
+        # Salvar as alterações no pedido
+        pedido.save()
+
+        # Redirecionar para a página de detalhes do pedido ou para onde desejar
+        return redirect('detalhes_pedido', pedido_id=pedido.id)
+
+    # Se não for um POST, exibir o formulário de edição do orçamento
+    return render(request, 'pedido/editar_entrada_pedido.html', {'pedido': pedido})

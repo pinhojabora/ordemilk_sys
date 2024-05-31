@@ -18,6 +18,14 @@
                 <button type="submit" class="btn_padrao2"><img class="table_icone" src="{% static 'Assets/icones/filtro.png' %}" title="Cadastrar"/></button>
                 </form>
                 </div>
+                <div class="submenu_item">
+                    <form action="{% url 'buscar_lista_precos'%}">
+                      <input type="text" name="buscar" placeholder="Digite o nome do produto">
+                      <button class="btn_padrao2" type="submit">
+                        <img class="table_icone" src="{% static 'Assets/icones/lupa1.png' %}" alt="ícone de search">
+                      </button>
+                    </form>
+                  </div>
             </div>
             
             

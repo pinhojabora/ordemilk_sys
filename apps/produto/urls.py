@@ -3,7 +3,8 @@ from apps.produto.views import(
                                 lista_produto, 
                                 detalhes_produto, 
                                 cadastro_produto, 
-                                buscar, editar_produto, 
+                                buscar,
+                                editar_produto, 
                                 lista_preco, 
                                 lista_categoria, 
                                 lista_subcategoria, 
@@ -15,7 +16,8 @@ from apps.produto.views import(
                                 excluir_subcategoria,
                                 importar_preco,
                                 importar_componentes,
-                                importar_componentes2
+                                importar_componentes2,
+                                buscar_lista_precos
                                 
 )
  
@@ -24,6 +26,7 @@ urlpatterns = [
         path('produto/<int:produto_id>/', detalhes_produto, name='detalhes_produto'),
         path('cadastro_produto', cadastro_produto, name='cadastro_produto'),
         path("buscar", buscar, name="buscar"),
+        path("buscar_lista_precos", buscar_lista_precos, name="buscar_lista_precos"),
         path('editar_produto/<int:produto_id>/', editar_produto, name='editar_produto'),
         path('lista_preco', lista_preco, name='lista_preco'),
         path('categoria', lista_categoria, name='categoria'),
